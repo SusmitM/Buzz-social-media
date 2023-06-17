@@ -1,11 +1,12 @@
 import './App.css';
-import Mockman from "mockman-js";
+import { AllRoutes } from './routes/AllRoutes';
+
 
 function App() {
   return (
     <div className="App">
-      <h1>App</h1>
-      <Mockman />
+      <AllRoutes/>
+     
       
     </div>
   );
