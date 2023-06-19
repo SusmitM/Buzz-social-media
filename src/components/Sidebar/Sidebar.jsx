@@ -10,6 +10,7 @@ export const Sidebar = () => {
    p={3}
    sx={{display:{xs:"none",sm:"block"}}}
    >
+       <Box position="fixed">
        <List>
           <ListItem disablePadding>
             <ListItemButton>
@@ -44,6 +45,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
         </List>
+       </Box>
 
    </Box>
   )
