@@ -5,15 +5,5 @@ import { Rightbar } from "../../components/Rightbar/Rightbar";
 import { Box, Stack } from "@mui/material";
 
 export const Home = () => {
-  return (
-    <>
-      <Box>
-        <Stack direction="row" spacing={2} justifyContent="space-between">
-          <Sidebar />
-          <Feed />
-          <Rightbar />
-        </Stack>
-      </Box>
-    </>
-  );
+  return <Feed />;
 };

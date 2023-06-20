@@ -19,7 +19,7 @@ import { AddPostModal } from "../AddPostModal/AddPostModal";
 
 export const Sidebar = () => {
   return (
-    <Box flex={1} p={3} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center" }}>
+    <Box flex={1} p={1} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center" }}>
       <Box position="fixed">
         <List>
           <ListItem disablePadding>
