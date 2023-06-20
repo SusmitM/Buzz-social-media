@@ -36,6 +36,14 @@ export const SignIn = () => {
       password: data.get("password"),
     });
   };
+
+  const guestLogin=()=>{
+    loginHandler({
+      username: "rajSharma",
+      password: "rajSharma123",
+    });
+
+  }
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -123,9 +131,19 @@ export const SignIn = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 1 }}
               >
                 Sign In
+              </Button>
+              <Typography textAlign="center" fontWeight={600}>or</Typography>
+              <Button
+              onClick={()=>guestLogin()}
+               
+                fullWidth
+                variant="outlined"
+                sx={{mt: 1,mb: 2 }}
+              >
+                Guest User
               </Button>
               <Grid container>
                 <Grid item>
