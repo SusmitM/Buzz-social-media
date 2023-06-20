@@ -69,7 +69,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
       borderRadius: 20 / 2,
     },
   }));
-export const Navbar = () => {
+export const Navbar = ({mode,setMode}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = anchorEl;
     const handleClick = (event) => {
@@ -92,7 +92,7 @@ export const Navbar = () => {
          <Icons>
          <Box>
       <FormControlLabel
-        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+        control={<MaterialUISwitch onChange={()=>setMode(mode === "light" ? "dark" : "light")} sx={{ m: 1 }} defaultChecked />}
       />
       </Box>
             <Tooltip title="Account settings">

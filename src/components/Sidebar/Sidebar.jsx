@@ -1,21 +1,31 @@
-import { Box,List,ListItemButton,ListItemIcon,ListItemText,ListItem } from "@mui/material"
-import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  Button,
+} from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import ExploreIcon from "@mui/icons-material/Explore";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { AddPostModal } from "../AddPostModal/AddPostModal";
+
+
+
+
+
 export const Sidebar = () => {
   return (
-   <Box
-   flex={1}
-   p={3}
-   sx={{display:{xs:"none",sm:"block"}}}
-   >
-       <Box position="fixed">
-       <List>
+    <Box flex={1} p={3} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center" }}>
+      <Box position="fixed">
+        <List>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <HomeIcon/>
+                <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItemButton>
@@ -39,14 +49,17 @@ export const Sidebar = () => {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <FavoriteIcon/>
+                <FavoriteIcon />
               </ListItemIcon>
               <ListItemText primary="Liked Posts" />
             </ListItemButton>
           </ListItem>
         </List>
-       </Box>
-
-   </Box>
-  )
-}
+      <Box className="BtnContainer" sx={{display:"flex",justifyContent:"center"}}>
+     <AddPostModal/>
+      </Box>
+      </Box>
+      
+    </Box>
+  );
+};

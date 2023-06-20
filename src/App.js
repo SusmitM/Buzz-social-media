@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ThemeProvider,createTheme } from '@mui/material';
+import { ThemeProvider,createTheme,Box } from '@mui/material';
 import './App.css';
 import { Navbar } from './components/Navbar/Navbar';
 import { AllRoutes } from './routes/AllRoutes';
@@ -15,8 +15,11 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider  theme={darkTheme}>
-      <Navbar/>
+        <Box backgroundColor={"background.default"} color={"text.primary"}>
+        <Navbar setMode={setMode} mode={mode} />
       <AllRoutes/>
+        </Box>
+      
       </ThemeProvider>
      
 
