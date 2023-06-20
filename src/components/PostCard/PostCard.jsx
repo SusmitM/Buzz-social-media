@@ -7,7 +7,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ShareIcon from '@mui/icons-material/Share';
 
-export const PostCard = () => {
+export const PostCard = (data) => {
+  const {_id,content,likes,username,img}=data
+
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   return (
     <Card  sx={{ maxWidth: 360,margin:5,boxShadow:2 }}>
@@ -22,24 +24,25 @@ export const PostCard = () => {
           <MoreVertIcon />
         </IconButton>
       }
-      title="Shrimp and Chorizo Paella"
+      title={username}
       subheader="September 14, 2016"
     />
     <CardMedia
       component="img"
       height="194"
-      image="https://res.cloudinary.com/dtrjdcrme/image/upload/v1647014828/ecommerce/pineapplemuffin1.webp"
+      image={img}
       alt="Paella dish"
+      sx={{display:img ? "":"none"}}
     />
     <CardContent>
       <Typography variant="body2" color="text.secondary">
-        This impressive paella is a perfect party dish and a fun meal to cook
-        together with your guests. Add 1 cup of frozen peas along with the mussels,
-        if you like.
+        {content}
       </Typography>
     </CardContent>
+
     <CardActions disableSpacing>
     <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite style={{ color: 'red' }} />} />
+    <Typography>{likes.likeCount}</Typography>
       <Checkbox
         {...label}
         icon={<BookmarkBorderIcon />}

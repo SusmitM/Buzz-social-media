@@ -6,12 +6,12 @@ import { PostCard } from "../../components/PostCard/PostCard";
 export const Home = () => {
   return (
     <Box>
+      {/* {PostCard()}
       {PostCard()}
       {PostCard()}
       {PostCard()}
       {PostCard()}
-      {PostCard()}
-      {PostCard()}
+      {PostCard()} */}
     </Box>
   );
 };
