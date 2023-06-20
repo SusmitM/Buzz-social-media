@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/Auth/login";
 
-
 const { createContext, useContext, useState, useEffect } = require("react");
 
 const AuthContext = createContext();
@@ -49,7 +48,16 @@ export const AuthContextProvider = ({children }) => {
     }
 
   }
-  console.log(localStorage.getItem("token"))
+
+  //logout function
+
+  const logout=()=>{
+    localStorage.removeItem("data");
+    navigate("/signin")
+
+
+  }
+ 
   useEffect(()=>{
     if(localStorageData){
       setUserData({token:localStorageData.token,user:localStorageData.foundUser});
@@ -59,7 +67,7 @@ export const AuthContextProvider = ({children }) => {
 
 
   return(
-    <AuthContext.Provider value={{loginHandler,localStorageData}}>
+    <AuthContext.Provider value={{loginHandler,localStorageData,logout}}>
         {children}
     </AuthContext.Provider>
   )

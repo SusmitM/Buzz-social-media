@@ -12,18 +12,20 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AddPostModal } from "../AddPostModal/AddPostModal";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 
 export const Sidebar = () => {
+  const navigate=useNavigate();
   return (
     <Box flex={1} p={1} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center" }}>
       <Box position="fixed">
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=>navigate("/")}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -31,7 +33,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=>navigate("/explore")}>
               <ListItemIcon>
                 <ExploreIcon />
               </ListItemIcon>
@@ -39,7 +41,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=>navigate("/bookmarks")}>
               <ListItemIcon>
                 <BookmarkIcon />
               </ListItemIcon>
@@ -47,7 +49,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={()=>navigate("/liked")}>
               <ListItemIcon>
                 <FavoriteIcon />
               </ListItemIcon>

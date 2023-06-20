@@ -10,7 +10,7 @@ import ShareIcon from '@mui/icons-material/Share';
 export const PostCard = () => {
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   return (
-    <Card  sx={{ maxWidth: 360,margin:5 }}>
+    <Card  sx={{ maxWidth: 360,margin:5,boxShadow:2 }}>
     <CardHeader
       avatar={
         <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
