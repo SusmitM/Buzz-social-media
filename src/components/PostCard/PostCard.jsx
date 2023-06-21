@@ -6,9 +6,22 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ShareIcon from '@mui/icons-material/Share';
+import { useDataContext } from "../../contexts/DataContext";
+import { useState } from "react";
 
 export const PostCard = (data) => {
-  const {_id,content,likes,username,img}=data
+
+  const {likePost,dislikePost}=useDataContext();
+  const {_id,content,likes,username,img}=data;
+
+  const [liked,setLiked]=useState(false);
+
+  //function to manage post like action
+  const handelPostLike=()=>{
+    liked ? dislikePost(_id) : likePost(_id);
+    setLiked(prev=>!prev)
+  }
+
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   return (
@@ -41,7 +54,7 @@ export const PostCard = (data) => {
     </CardContent>
 
     <CardActions disableSpacing>
-    <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite style={{ color: 'red' }} />} />
+    <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite style={{ color: 'red' }} />} onClick={()=>handelPostLike()} />
     <Typography>{likes.likeCount}</Typography>
       <Checkbox
         {...label}

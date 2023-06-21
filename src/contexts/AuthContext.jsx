@@ -15,9 +15,9 @@ export const AuthContextProvider = ({children }) => {
 
 
   //state to store the userDetails
-  const [userData,setUserData]=useState();
+  const [userData,setUserData]=useState(localStorageData);
 
-
+  
   //login function
 
   const loginHandler= async(loginData)=>{
@@ -25,6 +25,7 @@ export const AuthContextProvider = ({children }) => {
       const {data,status}= await loginService(loginData);
       if(status===200){
         const {encodedToken,foundUser}=data;
+        console.log(data)
 
         //setting the encoded token in local storage
 
@@ -60,14 +61,14 @@ export const AuthContextProvider = ({children }) => {
  
   useEffect(()=>{
     if(localStorageData){
-      setUserData({token:localStorageData.token,user:localStorageData.foundUser});
+      setUserData(JSON.parse(localStorage.getItem("data")));
 
     }
   },[])
 
 
   return(
-    <AuthContext.Provider value={{loginHandler,localStorageData,logout}}>
+    <AuthContext.Provider value={{userData,loginHandler,localStorageData,logout}}>
         {children}
     </AuthContext.Provider>
   )
