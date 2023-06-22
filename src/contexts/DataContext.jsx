@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { likePostService } from "../services/Data/likePostService";
 import { useAuthContext } from "./AuthContext";
 import { dislikePostService } from "../services/Data/dislikePostService";
+import { bookmarkPostService } from "../services/Data/bookmarkPostService";
+import { removeBookmarkPostService } from "../services/Data/removeBookmarkPostService";
+import { getBookmarkPostService } from "../services/Data/getBookmarkPostService";
 
 const { createContext } = require("react");
 
@@ -49,7 +52,7 @@ export const DataContextProvider = ({ children }) => {
   const dislikePost = async (postId) => {
     try {
       const { data, status } = await dislikePostService(postId, userData.token);
-      console.log(data)
+     
       if (status === 201) {
         setPosts(data.posts);
       }
@@ -58,12 +61,58 @@ export const DataContextProvider = ({ children }) => {
     }
   };
 
+  //function to get all bookmarked posts
+
+  const getBookmarkedPosts=async()=>{
+    try{
+      const response=await getBookmarkPostService(userData.token);
+      console.log( response);
+
+    }
+    catch(error){
+      console.error(error)
+    }
+  }
+
+  // function to bookmark a post
+  const bookmarkPost=async(postId)=>{
+    try{
+      const {data,status} = await bookmarkPostService(postId,userData.token);
+      console.log(data)
+     if(status===200){
+      
+     }
+
+    }
+    catch(error){
+      console.error(error)
+    }
+  }
+    // function to remove a post from bookmarks
+    const removeBookmarkPost=async(postId)=>{
+      try{
+        const {data,status} = await removeBookmarkPostService(postId,userData.token);
+       if(status===200){
+        
+       }
+  
+      }
+      catch(error){
+        console.error(error)
+      }
+    }
+  
+
   useEffect(() => {
     getPosts();
+    
+    
   }, []);
+  getBookmarkedPosts()
+  
 
   return (
-    <DataContext.Provider value={{ getPosts, allPosts, likePost, dislikePost }}>
+    <DataContext.Provider value={{ getPosts, allPosts, likePost, dislikePost,bookmarkPost,removeBookmarkPost }}>
       {children}
     </DataContext.Provider>
   );
