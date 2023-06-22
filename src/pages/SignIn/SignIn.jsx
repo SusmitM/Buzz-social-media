@@ -39,8 +39,8 @@ export const SignIn = () => {
 
   const guestLogin=()=>{
     loginHandler({
-      username: "rajSharma",
-      password: "rajSharma123",
+      username: "adarshbalika",
+      password: "adarshBalika123",
     });
 
   }

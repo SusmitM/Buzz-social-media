@@ -35,6 +35,7 @@ export const DataContextProvider = ({ children }) => {
   const likePost = async (postId) => {
     try {
       const { data, status } = await likePostService(postId, userData.token);
+      // console.log(data)
       if (status === 201) {
         setPosts(data.posts);
       }
@@ -48,7 +49,7 @@ export const DataContextProvider = ({ children }) => {
   const dislikePost = async (postId) => {
     try {
       const { data, status } = await dislikePostService(postId, userData.token);
-
+      console.log(data)
       if (status === 201) {
         setPosts(data.posts);
       }

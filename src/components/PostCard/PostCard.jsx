@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, CardHeader, CardMedia, Typography,IconButton, Avatar, Checkbox } from "@mui/material"
+import { Card, CardActions, CardContent, CardHeader, CardMedia, Typography,IconButton, Avatar, Checkbox, Box } from "@mui/material"
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -8,18 +8,19 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ShareIcon from '@mui/icons-material/Share';
 import { useDataContext } from "../../contexts/DataContext";
 import { useState } from "react";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export const PostCard = (data) => {
-
+  const {userData}=useAuthContext();
   const {likePost,dislikePost}=useDataContext();
   const {_id,content,likes,username,img}=data;
 
-  const [liked,setLiked]=useState(false);
+  const isPostLiked=likes.likedBy.find(({_id})=>_id===userData.user._id) ? true :false;
 
   //function to manage post like action
   const handelPostLike=()=>{
-    liked ? dislikePost(_id) : likePost(_id);
-    setLiked(prev=>!prev)
+    isPostLiked ? dislikePost(_id) : likePost(_id);
+   
   }
 
 
@@ -54,7 +55,15 @@ export const PostCard = (data) => {
     </CardContent>
 
     <CardActions disableSpacing>
-    <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite style={{ color: 'red' }} />} onClick={()=>handelPostLike()} />
+      <Box onClick={()=>handelPostLike()}>
+        {isPostLiked ?  <IconButton >
+        <Favorite style={{ color: 'red' }} />
+        </IconButton>  : <IconButton >
+        <FavoriteBorder />
+        </IconButton>}
+
+      </Box>
+    {/* <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite style={{ color: 'red' }} />}  /> */}
     <Typography>{likes.likeCount}</Typography>
       <Checkbox
         {...label}

@@ -7,7 +7,7 @@ import { formatDate } from "../utils/authUtils";
 
 export const users = [
   {
-    _id: uuid(),
+    _id: "5d1b8920-c6cc-4d6a-8a0f-039d01dd4cf0",
     firstName: "Adarsh",
     lastName: "Balika",
     username: "adarshbalika",
@@ -16,4 +16,3 @@ export const users = [
     updatedAt: formatDate(),
   },
 ];
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJlNzIyMTMxNi1jZmRhLTQzYzgtOTYyOC02MWNiYWYwOTM4YjAiLCJ1c2VybmFtZSI6ImFkYXJzaGJhbGlrYSJ9.GVWcRSuEqHidUZT9HGLQTDqnSA1NCpU1XR63kDCf3Vs"
