@@ -5,7 +5,7 @@ import { PostCard } from "../../components/PostCard/PostCard";
 
 export const Home = () => {
   return (
-    <Box>
+    <Box  height="100vh">
       {/* {PostCard()}
       {PostCard()}
       {PostCard()}

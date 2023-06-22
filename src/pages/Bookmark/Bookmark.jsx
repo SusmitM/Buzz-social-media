@@ -6,14 +6,14 @@ import { PostCard } from "../../components/PostCard/PostCard";
 export const Bookmark = () => {
   const { allPosts, bookmarkedPost } = useDataContext();
 
-  const showBookmarkedPosts = allPosts.filter(({ _id }) =>
-    bookmarkedPost.find((data) => data._id === _id)
+  const showBookmarkedPosts = allPosts?.filter(({ _id }) =>
+    bookmarkedPost?.find((data) => data._id === _id)
   );
  
 
   return (
     <>
-      <Box>
+      <Box height="100vh">
         {showBookmarkedPosts?.length === 0 && (
           <Typography variant="h4">No Bookmarked Post!!</Typography>
         )}

@@ -15,7 +15,7 @@ export const Layout = ({children}) => {
     
   return (
     <ThemeProvider  theme={darkTheme}>
-    <Box backgroundColor={"background.default"} color={"text.primary"}>
+    <Box backgroundColor={"background.default"} color={"text.primary"} >
          <Navbar setMode={setMode} mode={mode} />
         <Stack direction="row" spacing={2} justifyContent="space-between">
         <Sidebar/>

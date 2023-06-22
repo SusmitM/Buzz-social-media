@@ -10,10 +10,10 @@ export const Liked = () => {
     likes.likedBy.find(({ _id }) => _id === userData.user._id)
   );
 
-  console.log(likedPost);
+ 
   return (
     <>
-      <Box>
+      <Box height="100vh">
         {likedPost?.length === 0 && (
           <Typography variant="h4">No Liked Post!!</Typography>
         )}
