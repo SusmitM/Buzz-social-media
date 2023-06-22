@@ -19,6 +19,9 @@ export const DataContextProvider = ({ children }) => {
   //state to store the explore posts/ all posts
   const [allPosts, setPosts] = useState();
 
+  // state to store the bookmarked posts
+  const [bookmarkedPost, setBookmarkedPost] = useState();
+
   //function to get all the post
 
   const getPosts = async () => {
@@ -52,7 +55,7 @@ export const DataContextProvider = ({ children }) => {
   const dislikePost = async (postId) => {
     try {
       const { data, status } = await dislikePostService(postId, userData.token);
-     
+
       if (status === 201) {
         setPosts(data.posts);
       }
@@ -63,56 +66,68 @@ export const DataContextProvider = ({ children }) => {
 
   //function to get all bookmarked posts
 
-  const getBookmarkedPosts=async()=>{
-    try{
-      const response=await getBookmarkPostService(userData.token);
-      console.log( response);
+  const getBookmarkedPosts = async () => {
+    try {
+      const { data, status } = await getBookmarkPostService(userData.token);
 
+      if (status === 200) {
+      
+        setBookmarkedPost(data.bookmarks);
+      }
+    } catch (error) {
+      console.error(error);
     }
-    catch(error){
-      console.error(error)
-    }
-  }
+  };
 
   // function to bookmark a post
-  const bookmarkPost=async(postId)=>{
-    try{
-      const {data,status} = await bookmarkPostService(postId,userData.token);
-      console.log(data)
-     if(status===200){
-      
-     }
+  const bookmarkPost = async (postId) => {
+    try {
+      const { data, status } = await bookmarkPostService(
+        postId,
+        userData.token
+      );
 
-    }
-    catch(error){
-      console.error(error)
-    }
-  }
-    // function to remove a post from bookmarks
-    const removeBookmarkPost=async(postId)=>{
-      try{
-        const {data,status} = await removeBookmarkPostService(postId,userData.token);
-       if(status===200){
-        
-       }
-  
+      if (status === 200) {
+        setBookmarkedPost(data.bookmarks);
+        console.log(data)
       }
-      catch(error){
-        console.error(error)
-      }
+    } catch (error) {
+      console.error(error);
     }
-  
-
+  };
+  // function to remove a post from bookmarks
+  const removeBookmarkPost = async (postId) => {
+    try {
+      const { data, status } = await removeBookmarkPostService(
+        postId,
+        userData.token
+      );
+      if (status === 200) {
+        setBookmarkedPost(data.bookmarks);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+ 
   useEffect(() => {
     getPosts();
-    
-    
+    getBookmarkedPosts();
+
   }, []);
-  getBookmarkedPosts()
-  
 
   return (
-    <DataContext.Provider value={{ getPosts, allPosts, likePost, dislikePost,bookmarkPost,removeBookmarkPost }}>
+    <DataContext.Provider
+      value={{
+        getPosts,
+        allPosts,
+        likePost,
+        dislikePost,
+        bookmarkPost,
+        removeBookmarkPost,
+        bookmarkedPost,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );

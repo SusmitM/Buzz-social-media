@@ -23,23 +23,31 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 export const PostCard = (data) => {
   const { userData } = useAuthContext();
-  const { likePost, dislikePost, bookmarkPost, removeBookmarkPost } =
-    useDataContext();
+  const {
+    likePost,
+    dislikePost,
+    bookmarkedPost,
+    bookmarkPost,
+    removeBookmarkPost,
+  } = useDataContext();
   const { _id, content, likes, username, img } = data;
 
-  const isPostLiked = likes.likedBy.find(({ _id }) => _id === userData.user._id)
+  const isPostLiked = likes?.likedBy.find(
+    ({ _id }) => _id === userData.user._id
+  )
     ? true
     : false;
+
+  const isPostBookmarked = bookmarkedPost.find(data => data._id === _id);
 
   //function to manage post like action
   const handelPostLike = () => {
     isPostLiked ? dislikePost(_id) : likePost(_id);
   };
   //function to manage bookmark post action
-  const handelBookmarkPost=()=>{
-    bookmarkPost(_id)
-
-  }
+  const handelBookmarkPost = () => {
+    isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
+  };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
@@ -87,13 +95,13 @@ export const PostCard = (data) => {
         <Typography>{likes.likeCount}</Typography>
 
         <Box onClick={() => handelBookmarkPost()}>
-          {isPostLiked ? (
+          {isPostBookmarked ? (
             <IconButton>
-              <BookmarkBorderIcon />
+              <BookmarkIcon style={{ color: "skyblue" }} />
             </IconButton>
           ) : (
             <IconButton>
-              <BookmarkIcon />
+              <BookmarkBorderIcon />
             </IconButton>
           )}
         </Box>
