@@ -11,7 +11,7 @@ import {
   InputAdornment,
   IconButton,
   Button,
-  Link
+  Link,
 } from "@mui/material";
 import "./SignUp.module.css";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -19,16 +19,42 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export const SignUp = () => {
+  const { signUpHandler } = useAuthContext();
+
   //states for show and unshow password
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const navigate = useNavigate();
-//functions to control show & unshow password
+
+  //functions to control show & unshow password
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
+
+  //function to handel signUp
+
+  const handelSignUp = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    if(data.get("password")===data.get("confirmPassword")){
+     const signUpData={
+      email: data.get("email"),
+      password: data.get("password"),
+      username: data.get("username"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+     }
+     signUpHandler(signUpData)
+    }
+    else{
+      alert("Your Passwords are not matching")
+    }
+  };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -58,66 +84,79 @@ export const SignUp = () => {
           <Typography component="h1" variant="h5" fontWeight={400}>
             Sign Up
           </Typography>
-          <Box onSubmit={()=>console.log("fsfa")} component="form"  sx={{display:"flex",flexDirection:"column",textAlign:"left",padding:"2rem"}}>
-            <Grid container direction="row" justifyContent="space-evenly" textAlign="left">
-              <Box sx={{display:"flex",flexDirection:"column"}}> 
-              <InputLabel htmlFor="firstName">
-             First Name
-            </InputLabel>
-              <TextField
-                size="small"
-                halfWidth
-                required
-                id="firstName"
-                label="First Name"
-                name="firstName"
-                autoFocus
-              /></Box>
-              <Box  sx={{display:"flex",flexDirection:"column"}}>
-              <InputLabel   htmlFor="lastName">
-             Last Name
-            </InputLabel>
+
+          <Box
+            component="form"
+            onSubmit={handelSignUp}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+              padding: "2rem",
+            }}
+          >
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-evenly"
+              textAlign="left"
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <InputLabel htmlFor="firstName">First Name</InputLabel>
                 <TextField
-                size="small"
-                halfWidth
-                required
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoFocus
-              /></Box>
-             
-              
+                  size="small"
+                  halfWidth
+                  required
+                  id="firstName"
+                  label="First Name"
+                  name="firstName"
+                  autoFocus
+                />
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <InputLabel htmlFor="lastName">Last Name</InputLabel>
+                <TextField
+                  size="small"
+                  halfWidth
+                  required
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoFocus
+                />
+              </Box>
             </Grid>
-            <InputLabel  sx={{marginTop:"10px"}} htmlFor="email">
-            Email
+            <InputLabel sx={{ marginTop: "10px" }} htmlFor="email">
+              Email
             </InputLabel>
             <TextField
-            size="small"
-            halfWidth
-            required
-            id="email"
-            name="email"
-            type="email"
-            autoFocus
-            label="Email"/>
-            <InputLabel sx={{marginTop:"10px"}}htmlFor="username">
-           Username
+              size="small"
+              halfWidth
+              required
+              id="email"
+              name="email"
+              type="email"
+              autoFocus
+              label="Email"
+            />
+            <InputLabel sx={{ marginTop: "10px" }} htmlFor="username">
+              Username
             </InputLabel>
-             <TextField
-            size="small"
-            halfWidth
-            required
-            id="username"
-            name="username"
-            type="username"
-            autoFocus
-            label="Username"/>
-              <InputLabel  sx={{marginTop:"10px"}}htmlFor="password">
+            <TextField
+              size="small"
+              halfWidth
+              required
+              id="username"
+              name="username"
+              type="username"
+              autoFocus
+              label="Username"
+            />
+            <InputLabel sx={{ marginTop: "10px" }} htmlFor="password">
               Password
             </InputLabel>
-           
-              <OutlinedInput
+
+            <OutlinedInput
               id="password"
               label="password"
               name="password"
@@ -126,7 +165,7 @@ export const SignUp = () => {
               halfWidth
               type={showPassword ? "text" : "password"}
               endAdornment={
-                <InputAdornment position="end" label="password"  >
+                <InputAdornment position="end" label="password">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
@@ -136,15 +175,14 @@ export const SignUp = () => {
                   </IconButton>
                 </InputAdornment>
               }
-              
             />
-             <InputLabel  sx={{marginTop:"10px"}} htmlFor="confirm-password">
+            <InputLabel sx={{ marginTop: "10px" }} htmlFor="confirmPassword">
               Confirm Password
             </InputLabel>
             <OutlinedInput
-              id="confirm-password"
+              id="confirmPassword"
               label="Confirm Password"
-              name="confirm-password"
+              name="confirmPassword"
               required
               size="small"
               halfWidth
@@ -160,7 +198,6 @@ export const SignUp = () => {
                   </IconButton>
                 </InputAdornment>
               }
-              
             />
             <Button
               type="submit"
@@ -170,19 +207,18 @@ export const SignUp = () => {
             >
               Sign Up
             </Button>
-            
-
           </Box>
-          <Box sx={{ fontWeight: "400",padding:"5px" }}>
-                  Already Have an account?{" "}
-                  <Link
-                    onClick={() => navigate("/signin")}
-                    sx={{ cursor: "pointer" }}
-                    variant="body2"
-                  >
-                    {"Signin Here"}
-                  </Link>
-                </Box>
+
+          <Box sx={{ fontWeight: "400", padding: "5px" }}>
+            Already Have an account?{" "}
+            <Link
+              onClick={() => navigate("/signin")}
+              sx={{ cursor: "pointer" }}
+              variant="body2"
+            >
+              {"Signin Here"}
+            </Link>
+          </Box>
         </Paper>
       </Grid>
     </Grid>

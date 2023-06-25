@@ -38,7 +38,7 @@ export const PostCard = (data) => {
     ? true
     : false;
 
-  const isPostBookmarked = bookmarkedPost.find(data => data._id === _id);
+  const isPostBookmarked = bookmarkedPost?.find(data => data?._id === _id) ? true : false;
 
   //function to manage post like action
   const handelPostLike = () => {

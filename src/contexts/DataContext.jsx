@@ -20,7 +20,7 @@ export const DataContextProvider = ({ children }) => {
   const [allPosts, setPosts] = useState();
 
   // state to store the bookmarked posts
-  const [bookmarkedPost, setBookmarkedPost] = useState();
+  const [bookmarkedPost, setBookmarkedPost] = useState([]);
 
   //function to get all the post
 

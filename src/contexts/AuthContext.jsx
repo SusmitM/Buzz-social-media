@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/Auth/login";
+import { signUpService } from "../services/Auth/signUp";
 
 const { createContext, useContext, useState, useEffect } = require("react");
 
@@ -17,6 +18,20 @@ export const AuthContextProvider = ({children }) => {
   //state to store the userDetails
   const [userData,setUserData]=useState(localStorageData);
 
+  //signUp function
+
+  const signUpHandler=async(signUpData)=>{
+    try{
+      const {status} = await signUpService(signUpData);
+      if(status===201){
+        navigate("/signin")
+      }
+    }
+    catch(error){
+      console.error(error)
+    }
+  }
+
   
   //login function
 
@@ -25,14 +40,11 @@ export const AuthContextProvider = ({children }) => {
       const {data,status}= await loginService(loginData);
       if(status===200){
         const {encodedToken,foundUser}=data;
-        console.log(data)
+     
 
         //setting the encoded token in local storage
 
         localStorage.setItem("data",JSON.stringify({token:encodedToken,user:foundUser}));
-
-
-
 
         //updating the local state with token and userData
         
@@ -41,7 +53,6 @@ export const AuthContextProvider = ({children }) => {
         //navigating to home on successful login
         navigate("/")
 
-
       }
     }
     catch(error){
@@ -49,6 +60,9 @@ export const AuthContextProvider = ({children }) => {
     }
 
   }
+
+
+
 
   //logout function
 
@@ -68,7 +82,7 @@ export const AuthContextProvider = ({children }) => {
 
 
   return(
-    <AuthContext.Provider value={{userData,loginHandler,localStorageData,logout}}>
+    <AuthContext.Provider value={{userData,loginHandler,signUpHandler,localStorageData,logout}}>
         {children}
     </AuthContext.Provider>
   )
