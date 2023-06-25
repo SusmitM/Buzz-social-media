@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+
 import {
   Avatar,
   Button,
@@ -15,18 +15,17 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./SignIn.module.css";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-
-const defaultTheme = createTheme();
- 
 export const SignIn = () => {
-  const {loginHandler}=useAuthContext()
+  const { loginHandler } = useAuthContext();
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,128 +36,129 @@ export const SignIn = () => {
     });
   };
 
-  const guestLogin=()=>{
+  const guestLogin = () => {
     loginHandler({
       username: "adarshbalika",
       password: "adarshBalika123",
     });
-
-  }
+  };
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <CssBaseline />
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          backgroundImage: "url(https://source.unsplash.com/random?wallpapers)",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: (t) => t.palette.grey[50],
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Box
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            my: 8,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+
+          <Typography component="h1" variant="h5" fontWeight={400}>
+            Sign In
+          </Typography>
+
           <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ mt: 1 }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
+             <InputLabel htmlFor="username">
+              Username
+            </InputLabel>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoFocus
+            />
 
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <InputLabel htmlFor="password">
+              Password
+            </InputLabel>
+            
 
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+            <OutlinedInput
+              id="password"
+              label="password"
+              name="password"
+              required
+              fullWidth
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end"  >
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-              />
-
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-
-              <OutlinedInput
-                id="outlined-adornment-password"
-                fullWidth
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end" >
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-               
-                label="password"
-                name="password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 1 }}
-              >
-                Sign In
-              </Button>
-              <Typography textAlign="center" fontWeight={600}>or</Typography>
-              <Button
-              onClick={()=>guestLogin()}
-               
-                fullWidth
-                variant="outlined"
-                sx={{mt: 1,mb: 2 }}
-              >
-                Guest User
-              </Button>
-              <Grid container>
-                <Grid item>
-                  <Box sx={{ fontWeight: "500" }}>
-                    Don't have an account?{" "}
-                    <Link href="#" variant="body2">
-                      {"Register Here"}
-                    </Link>
-                  </Box>
-                </Grid>
+              Sign In
+            </Button>
+            <Typography textAlign="center" fontWeight={600}>
+              or
+            </Typography>
+            <Button
+              onClick={() => guestLogin()}
+              fullWidth
+              variant="outlined"
+              sx={{ mt: 1, mb: 2 }}
+            >
+              Guest User
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Box sx={{ fontWeight: "500" }}>
+                  Don't have an account?{" "}
+                  <Link
+                    onClick={() => navigate("/signup")}
+                    sx={{ cursor: "pointer" }}
+                    variant="body2"
+                  >
+                    {"Register Here"}
+                  </Link>
+                </Box>
               </Grid>
-            </Box>
+            </Grid>
           </Box>
-        </Grid>
+        </Box>
       </Grid>
-    </ThemeProvider>
+    </Grid>
   );
 };
