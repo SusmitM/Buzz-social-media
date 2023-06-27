@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useReducer } from "react";
 import { getAllPosts } from "../services/Data/getAllPosts";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -8,6 +8,7 @@ import { dislikePostService } from "../services/Data/dislikePostService";
 import { bookmarkPostService } from "../services/Data/bookmarkPostService";
 import { removeBookmarkPostService } from "../services/Data/removeBookmarkPostService";
 import { getBookmarkPostService } from "../services/Data/getBookmarkPostService";
+import { dataReducer, initialDataState } from "../reducers/dataReducer";
 
 const { createContext } = require("react");
 
@@ -16,11 +17,11 @@ const DataContext = createContext();
 export const DataContextProvider = ({ children }) => {
   const { userData } = useAuthContext();
 
-  //state to store the explore posts/ all posts
-  const [allPosts, setPosts] = useState();
+ //reducer to store the posts data
+  const [dataState,dataDispatch]=useReducer(dataReducer,initialDataState);
+  const {allPosts,bookmarkedPost}=dataState;
 
-  // state to store the bookmarked posts
-  const [bookmarkedPost, setBookmarkedPost] = useState([]);
+
 
   //function to get all the post
 
@@ -29,7 +30,10 @@ export const DataContextProvider = ({ children }) => {
       const response = await getAllPosts();
       if (response.status === 200) {
         //returning the posts
-        setPosts(response.data.posts);
+        dataDispatch({
+          type:"addPosts",
+          posts:response.data.posts
+        })
       }
     } catch (error) {
       console.error(error);
@@ -41,11 +45,16 @@ export const DataContextProvider = ({ children }) => {
   const likePost = async (postId) => {
     try {
       const { data, status } = await likePostService(postId, userData.token);
-      // console.log(data)
+    
       if (status === 201) {
-        setPosts(data.posts);
+       
+        dataDispatch({
+          type: "updatePosts",
+          posts:data.posts
+        })
       }
-    } catch (error) {
+      }
+     catch (error) {
       console.error(error);
     }
   };
@@ -57,7 +66,11 @@ export const DataContextProvider = ({ children }) => {
       const { data, status } = await dislikePostService(postId, userData.token);
 
       if (status === 201) {
-        setPosts(data.posts);
+      
+        dataDispatch({
+          type: "updatePosts",
+          posts:data.posts
+        })
       }
     } catch (error) {
       console.error(error);
@@ -72,7 +85,11 @@ export const DataContextProvider = ({ children }) => {
 
       if (status === 200) {
       
-        setBookmarkedPost(data.bookmarks);
+      
+        dataDispatch({
+          type: "addBookmarkedPosts",
+          bookmarkedPosts:data.bookmarks
+        })
       }
     } catch (error) {
       console.error(error);
@@ -88,8 +105,11 @@ export const DataContextProvider = ({ children }) => {
       );
 
       if (status === 200) {
-        setBookmarkedPost(data.bookmarks);
-        console.log(data)
+        
+        dataDispatch({
+          type: "updateBookmarkedPosts",
+          bookmarkedPosts:data.bookmarks
+        })
       }
     } catch (error) {
       console.error(error);
@@ -103,7 +123,11 @@ export const DataContextProvider = ({ children }) => {
         userData.token
       );
       if (status === 200) {
-        setBookmarkedPost(data.bookmarks);
+       
+        dataDispatch({
+          type: "updateBookmarkedPosts",
+          bookmarkedPosts:data.bookmarks
+        })
       }
     } catch (error) {
       console.error(error);
