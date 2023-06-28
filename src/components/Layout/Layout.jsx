@@ -19,7 +19,7 @@ export const Layout = ({children}) => {
          <Navbar setMode={setMode} mode={mode} />
         <Stack direction="row" spacing={2} justifyContent="space-between">
         <Sidebar/>
-        <Box flex={4} p={{ xs: 0, md: 2 }} sx={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <Box  flex={4} p={{ xs: 0, md: 2 }} sx={{display:"flex",flexDirection:"column",alignItems:"center",height:"100%"}}>
         {children}
         </Box>
         <Rightbar/>

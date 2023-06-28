@@ -13,7 +13,7 @@ export const Bookmark = () => {
 
   return (
     <>
-      <Box height="100vh">
+      <Box height="100%">
         {showBookmarkedPosts?.length === 0 && (
           <Typography variant="h4">No Bookmarked Post!!</Typography>
         )}

@@ -3,6 +3,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import React from "react";
 import { useState } from "react";
+import { useDataContext } from "../../contexts/DataContext";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -19,7 +20,19 @@ const UserBox = styled(Box)({
   
 
 export const AddPostModal = () => {
+  const {makePost}=useDataContext();
   const [open, setOpen] = useState(false);
+  const [postDetails,setPostDetails]=useState({content:"",mediaURL:""});
+
+  const updateContent=(text)=>{
+  setPostDetails(prev=>({...prev,content:text}));
+  }
+
+  const submitPost=()=>{
+    makePost(postDetails);
+    setPostDetails({content:"",mediaURL:""})
+    setOpen(false)
+  }
   return (
     <div>
       <Button variant="contained" onClick={() => setOpen((prev) => !prev)}>
@@ -41,6 +54,7 @@ export const AddPostModal = () => {
           multiline
           rows={3}
           variant="standard"
+          onChange={(e)=>updateContent(e.target.value)}
         />
         <Stack direction="row" mt={2} gap={3} sx={{justifyContent:"space-between"}}>
           <Box >
@@ -48,7 +62,7 @@ export const AddPostModal = () => {
            <EmojiEmotionsIcon  sx={{marginLeft:"10px",color:"gray"}}/>
 
           </Box>
-          <Button variant="contained">Post</Button>
+          <Button variant="contained" disabled={postDetails.content.length>0 ? false: true} onClick={submitPost}>Post</Button>
         </Stack>
         </Box>
       </StyledModal>

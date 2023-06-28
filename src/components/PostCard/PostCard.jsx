@@ -30,7 +30,7 @@ export const PostCard = (data) => {
     bookmarkPost,
     removeBookmarkPost,
   } = useDataContext();
-  const { _id, content, likes, username, img } = data;
+  const { _id, content, likes, username, mediaURL } = data;
 
   const isPostLiked = likes?.likedBy.find(
     ({ _id }) => _id === userData.user._id
@@ -49,7 +49,6 @@ export const PostCard = (data) => {
     isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
   };
 
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <Card sx={{ maxWidth: 360, margin: 5, boxShadow: 2 }}>
       <CardHeader
@@ -69,9 +68,9 @@ export const PostCard = (data) => {
       <CardMedia
         component="img"
         height="194"
-        image={img}
+        image={ mediaURL}
         alt="Paella dish"
-        sx={{ display: img ? "" : "none" }}
+        sx={{ display: mediaURL ? "" : "none" }}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">

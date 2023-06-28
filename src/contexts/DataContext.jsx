@@ -9,6 +9,7 @@ import { bookmarkPostService } from "../services/Data/bookmarkPostService";
 import { removeBookmarkPostService } from "../services/Data/removeBookmarkPostService";
 import { getBookmarkPostService } from "../services/Data/getBookmarkPostService";
 import { dataReducer, initialDataState } from "../reducers/dataReducer";
+import { makePostService } from "../services/Data/makePostService";
 
 const { createContext } = require("react");
 
@@ -133,6 +134,25 @@ export const DataContextProvider = ({ children }) => {
       console.error(error);
     }
   };
+
+  //function to make a post
+
+  const makePost= async(postDetails)=>{
+    try{
+      const {status,data}=await makePostService(postDetails,userData.token)
+      if(status===201){
+        dataDispatch({
+          type: "updatePosts",
+          posts:data.posts
+        })
+
+      }
+      
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
  
   useEffect(() => {
     getPosts();
@@ -150,6 +170,7 @@ export const DataContextProvider = ({ children }) => {
         bookmarkPost,
         removeBookmarkPost,
         bookmarkedPost,
+        makePost
       }}
     >
       {children}

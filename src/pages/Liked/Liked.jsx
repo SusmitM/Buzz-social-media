@@ -13,7 +13,7 @@ export const Liked = () => {
  
   return (
     <>
-      <Box height="100vh">
+      <Box height="100%">
         {likedPost?.length === 0 && (
           <Typography variant="h4">No Liked Post!!</Typography>
         )}

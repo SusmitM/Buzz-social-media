@@ -33,4 +33,61 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: "3XHvLP9kC",
+    content: "Yayy! Its my Birthday Today. Made this cake for myself!",
+    mediaURL:
+      "https://res.cloudinary.com/dtrjdcrme/image/upload/v1647014336/ecommerce/chocolatecake4.webp",
+    likes: {
+      likeCount: 2,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: "EO7iOPN9n8",
+        username: "carlsmith",
+        text: "Happy Birthday! Enjoy your Day!!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+    username: "rajsharma",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+  {
+    _id: "MTYtVhecCj",
+    content:
+      "You are never too old to set another goal or to dream a new dream.",
+    mediaURL: "",
+    likes: {
+      likeCount: 5,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [],
+    username: "adarshbalika",
+    createdAt: "2022-03-06T10:55:06+05:30",
+    updatedAt: formatDate(),
+  },
+  {
+    _id: "b310b9bc-d150-4462-800a-7369938ea3a8",
+    content: "testPost",
+    mediaURL: "",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: []
+    },
+    omments: [],
+    username: "adarshbalika",
+    createdAt: "2023-06-28T20:34:39+05:30",
+    updatedAt: "2023-06-28T20:34:39+05:30",
+    id: "5"
+  }
+  
+ 
 ];

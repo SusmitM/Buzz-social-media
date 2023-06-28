@@ -6,7 +6,7 @@ export const Explore = () => {
   const { allPosts } = useDataContext();
 
   return (
-    <Box  height="100vh">
+    <Box  height="100%">
       <Typography variant="h5">Explore</Typography>
       <Box>
         {allPosts?.map((data) => {
