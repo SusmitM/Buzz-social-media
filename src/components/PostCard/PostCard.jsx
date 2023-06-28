@@ -9,6 +9,10 @@ import {
   Avatar,
   Checkbox,
   Box,
+  Menu,
+  MenuItem,
+  Button,
+  Paper,
 } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -21,7 +25,8 @@ import { useDataContext } from "../../contexts/DataContext";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-export const PostCard = (data) => {
+export const PostCard = ({data}) => {
+  
   const { userData } = useAuthContext();
   const {
     likePost,
@@ -29,6 +34,7 @@ export const PostCard = (data) => {
     bookmarkedPost,
     bookmarkPost,
     removeBookmarkPost,
+    deletePost
   } = useDataContext();
   const { _id, content, likes, username, mediaURL } = data;
 
@@ -38,7 +44,9 @@ export const PostCard = (data) => {
     ? true
     : false;
 
-  const isPostBookmarked = bookmarkedPost?.find(data => data?._id === _id) ? true : false;
+  const isPostBookmarked = bookmarkedPost?.find((data) => data?._id === _id)
+    ? true
+    : false;
 
   //function to manage post like action
   const handelPostLike = () => {
@@ -48,27 +56,49 @@ export const PostCard = (data) => {
   const handelBookmarkPost = () => {
     isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
   };
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Card sx={{ maxWidth: 360, margin: 5, boxShadow: 2 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            R
+            {username}
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={handleClick}>
             <MoreVertIcon />
           </IconButton>
         }
         title={username}
         subheader="September 14, 2016"
       />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Edit</MenuItem>
+        <MenuItem onClick={()=>{deletePost(_id);handleClose()}}>Delete</MenuItem>
+      </Menu>
+
       <CardMedia
         component="img"
         height="194"
-        image={ mediaURL}
+        image={mediaURL}
         alt="Paella dish"
         sx={{ display: mediaURL ? "" : "none" }}
       />
@@ -91,7 +121,7 @@ export const PostCard = (data) => {
           )}
         </Box>
 
-        <Typography>{likes.likeCount}</Typography>
+        <Typography>{likes?.likeCount}</Typography>
 
         <Box onClick={() => handelBookmarkPost()}>
           {isPostBookmarked ? (

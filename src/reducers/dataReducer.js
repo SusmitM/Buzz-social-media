@@ -13,6 +13,7 @@ export const dataReducer=(dataState,action)=>{
         case "updateBookmarkedPosts":{
             return {...dataState,bookmarkedPost:action.bookmarkedPosts}
         }
+       
 
         default: return dataState 
         

@@ -6,12 +6,12 @@ export const Explore = () => {
   const { allPosts } = useDataContext();
 
   return (
-    <Box  height="100%">
+    <Box height="100%">
       <Typography variant="h5">Explore</Typography>
       <Box>
-        {allPosts?.map((data) => {
-          return PostCard(data)
-        })}
+        {allPosts?.map((data) => (
+          <PostCard key={data.id} data={data} />
+        ))}
       </Box>
     </Box>
   );
