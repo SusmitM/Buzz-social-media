@@ -7,19 +7,19 @@ export const Liked = () => {
   const { userData } = useAuthContext();
   const { allPosts } = useDataContext();
   const likedPost = allPosts?.filter(({ likes }) =>
-    likes.likedBy.find(({ _id }) => _id === userData.user._id)
+    likes.likedBy.find(({ _id }) => _id === userData?.user?._id)
   );
-
+  
  
   return (
     <>
-      <Box height="100%">
+      <Box minHeight="100vh">
         {likedPost?.length === 0 && (
           <Typography variant="h4">No Liked Post!!</Typography>
         )}
         {likedPost?.length > 0 &&
           likedPost?.map((data) => {
-            return PostCard(data);
+            return <PostCard key={data.id} data={data} />
           })}
       </Box>
     </>

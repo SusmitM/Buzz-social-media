@@ -13,6 +13,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AddPostModal } from "../AddPostModal/AddPostModal";
 import { useNavigate } from "react-router-dom";
+import { useDataContext } from "../../contexts/DataContext";
 
 
 
@@ -20,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () => {
   const navigate=useNavigate();
+  const {setOpen}=useDataContext();
   return (
     <Box flex={1} p={1} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center" }}>
       <Box position="fixed">
@@ -58,6 +60,9 @@ export const Sidebar = () => {
           </ListItem>
         </List>
       <Box className="BtnContainer" sx={{display:"flex",justifyContent:"center"}}>
+      <Button variant="contained" onClick={() => setOpen((prev) => !prev)}>
+        Post
+      </Button>
      <AddPostModal/>
       </Box>
       </Box>

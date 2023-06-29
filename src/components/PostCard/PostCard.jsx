@@ -24,8 +24,11 @@ import ShareIcon from "@mui/icons-material/Share";
 import { useDataContext } from "../../contexts/DataContext";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
+import {AddPostModal} from "../../components/AddPostModal/AddPostModal"
+
 
 export const PostCard = ({data}) => {
+
   
   const { userData } = useAuthContext();
   const {
@@ -34,12 +37,14 @@ export const PostCard = ({data}) => {
     bookmarkedPost,
     bookmarkPost,
     removeBookmarkPost,
-    deletePost
+    deletePost,
+    setOpen,
+    setEditing
   } = useDataContext();
   const { _id, content, likes, username, mediaURL } = data;
 
   const isPostLiked = likes?.likedBy.find(
-    ({ _id }) => _id === userData.user._id
+    ({ _id }) => _id === userData?.user?._id
   )
     ? true
     : false;
@@ -56,6 +61,9 @@ export const PostCard = ({data}) => {
   const handelBookmarkPost = () => {
     isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
   };
+
+  const [show,setShow]=useState(false);
+  
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -67,6 +75,7 @@ export const PostCard = ({data}) => {
   };
 
   return (
+   <>
     <Card sx={{ maxWidth: 360, margin: 5, boxShadow: 2 }}>
       <CardHeader
         avatar={
@@ -91,7 +100,7 @@ export const PostCard = ({data}) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
+        <MenuItem onClick={()=>{setOpen((prev) => !prev);handleClose();setShow(prev=>!prev);setEditing(true)}}>Edit</MenuItem>
         <MenuItem onClick={()=>{deletePost(_id);handleClose()}}>Delete</MenuItem>
       </Menu>
 
@@ -142,5 +151,8 @@ export const PostCard = ({data}) => {
         </IconButton>
       </CardActions>
     </Card>
+    {show && <AddPostModal postData={data}/>}
+   </>
+
   );
 };

@@ -12,6 +12,7 @@ import {
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useDataContext } from "../../contexts/DataContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -27,12 +28,12 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-export const AddPostModal = () => {
-  const { makePost } = useDataContext();
+export const AddPostModal = ({postData}) => {
+  const {userData}=useAuthContext();
+  const { makePost,open,setOpen,editing,setEditing,editPost } = useDataContext();
 
-  // state for input modal
-  const [open, setOpen] = useState(false);
-  const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
+
+  const [postDetails, setPostDetails] = useState(postData ?{content:postData?.content,mediaURL:postData?.mediaURL } :{ content: "", mediaURL: "" });
 
   const updateContent = (text) => {
     setPostDetails((prev) => ({ ...prev, content: text }));
@@ -44,12 +45,21 @@ export const AddPostModal = () => {
     setOpen(false);
   };
 
+  const editHandler=()=>{
+    editPost(postDetails,postData._id)
+    setOpen(false);
+    setEditing (false);
+    setPostDetails({ content: "", mediaURL: "" });
+    postData="";
+
+  }
+  
+ 
+
   return (
     <div>
-      <Button variant="contained" onClick={() => setOpen((prev) => !prev)}>
-        Post
-      </Button>
-      <StyledModal open={open} onClose={() => setOpen((prev) => !prev)}>
+      
+      <StyledModal open={open} onClose={() => {setOpen((prev) => !prev);setEditing (false)}}>
         <Box
           width={400}
           height={210}
@@ -64,12 +74,12 @@ export const AddPostModal = () => {
             textAlign="center"
             component="h2"
           >
-            Create a Post
+           {editing ? "Edit the Post": "Create a Post"}
           </Typography>
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }} />
             <Typography fontWeight={500} variant="span">
-              John Doe
+              {userData.user.firstName}{" "} {userData.user.lastName}
             </Typography>
           </UserBox>
           <TextField
@@ -79,6 +89,7 @@ export const AddPostModal = () => {
             multiline
             rows={3}
             variant="standard"
+            value={postDetails?.content}
             onChange={(e) => updateContent(e.target.value)}
           />
           <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
@@ -86,9 +97,12 @@ export const AddPostModal = () => {
               <ImageIcon sx={{ color: "gray" }} />
               <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
-            <Button variant="contained" disabled={postDetails.content.length > 0 ? false : true} onClick={submitPost}>
+            {editing ? <Button variant="contained" disabled={postDetails.content?.length > 0 ? false : true} onClick={editHandler}>
+              Edit
+            </Button>: <Button variant="contained" disabled={postDetails.content?.length > 0 ? false : true} onClick={submitPost}>
               Post
-            </Button>
+            </Button>}
+            
           </Stack>
         </Box>
       </StyledModal>

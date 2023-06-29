@@ -13,13 +13,13 @@ export const Bookmark = () => {
 
   return (
     <>
-      <Box height="100%">
+      <Box minHeight="100vh">
         {showBookmarkedPosts?.length === 0 && (
           <Typography variant="h4">No Bookmarked Post!!</Typography>
         )}
         {showBookmarkedPosts?.length > 0 &&
           showBookmarkedPosts?.map((data) => {
-            return PostCard(data);
+            return <PostCard key={data.id} data={data} />
           })}
       </Box>
     </>

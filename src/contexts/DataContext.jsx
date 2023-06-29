@@ -10,6 +10,7 @@ import { getBookmarkPostService } from "../services/Data/getBookmarkPostService"
 import { makePostService } from "../services/Data/makePostService";
 import { deletePostService } from "../services/Data/deletePost";
 import { dataReducer, initialDataState } from "../reducers/dataReducer";
+import { editPostService } from "../services/Data/editPostService";
 
 const DataContext = createContext();
 
@@ -19,7 +20,11 @@ export const DataContextProvider = ({ children }) => {
   // Reducer to store the posts data
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
   const { allPosts, bookmarkedPost } = dataState;
+  // state for input modal
+  const [open, setOpen] = useState(false);
+  //state for handel edit post
 
+  const [editing,setEditing]=useState(false);
   useEffect(() => {
     getPosts();
     getBookmarkedPosts();
@@ -157,6 +162,24 @@ export const DataContextProvider = ({ children }) => {
       console.error(error);
     }
   };
+    // Function to edit a post
+    const editPost = async (postDetails,postId) => {
+      try {
+        const { status, data } = await editPostService(
+          postDetails,
+          userData.token,
+          postId
+        );
+        if (status === 201) {
+          dataDispatch({
+            type: "addPosts",
+            posts: data.posts,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <DataContext.Provider
@@ -169,7 +192,12 @@ export const DataContextProvider = ({ children }) => {
         removeBookmarkPost,
         bookmarkedPost,
         makePost,
-        deletePost
+        deletePost,
+        open,
+        setOpen,
+        editing,
+        setEditing,
+        editPost
       }}
     >
       {children}
