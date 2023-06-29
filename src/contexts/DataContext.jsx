@@ -11,15 +11,17 @@ import { makePostService } from "../services/Data/makePostService";
 import { deletePostService } from "../services/Data/deletePost";
 import { dataReducer, initialDataState } from "../reducers/dataReducer";
 import { editPostService } from "../services/Data/editPostService";
+import { getAllUsers } from "../services/Data/getAllUsers";
+import { followUserService } from "../services/Data/followUserService";
 
 const DataContext = createContext();
 
 export const DataContextProvider = ({ children }) => {
-  const { userData } = useAuthContext();
+  const { userData,setUserData } = useAuthContext();
 
   // Reducer to store the posts data
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
-  const { allPosts, bookmarkedPost } = dataState;
+  const { allPosts, bookmarkedPost,users } = dataState;
   // state for input modal
   const [open, setOpen] = useState(false);
   //state for handel edit post
@@ -28,7 +30,29 @@ export const DataContextProvider = ({ children }) => {
   useEffect(() => {
     getPosts();
     getBookmarkedPosts();
+    getUsers()
   }, []);
+
+    // Function to get all the users
+    const getUsers= async () => {
+      try {
+        const {status,data} = await getAllUsers();
+       
+        if (status === 200) {
+          dataDispatch({
+            type: "addUsers",
+            users: data.users,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+
+
+
+
 
   // Function to get all the posts
   const getPosts = async () => {
@@ -180,10 +204,23 @@ export const DataContextProvider = ({ children }) => {
         console.log(error);
       }
     };
+    //function to follow an user
+
+    const followUser= async(userId)=>{
+      try{
+        const {data,status}= await followUserService(userData.token,userId)
+        if(status===200)
+        setUserData(data.user)
+      }
+      catch(error){
+        console.error(error)
+      }
+    }
 
   return (
     <DataContext.Provider
       value={{
+        users,
         getPosts,
         allPosts,
         likePost,
@@ -197,7 +234,8 @@ export const DataContextProvider = ({ children }) => {
         setOpen,
         editing,
         setEditing,
-        editPost
+        editPost,
+        followUser
       }}
     >
       {children}

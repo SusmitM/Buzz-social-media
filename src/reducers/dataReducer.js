@@ -1,8 +1,14 @@
 export const dataReducer=(dataState,action)=>{
     switch(action.type){
+
+        case "addUsers":{
+            return {...dataState,users:action.users}
+        }
+
         case "addPosts":{
             return {...dataState,allPosts:action.posts}
         }
+
          case "updatePosts":{
             return {...dataState,allPosts:action.posts}
         }
@@ -20,4 +26,4 @@ export const dataReducer=(dataState,action)=>{
     }
 }
 
-export const initialDataState={allPosts:[],bookmarkedPost:[]}
+export const initialDataState={users:[],allPosts:[],bookmarkedPost:[]}
