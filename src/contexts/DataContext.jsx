@@ -13,6 +13,7 @@ import { dataReducer, initialDataState } from "../reducers/dataReducer";
 import { editPostService } from "../services/Data/editPostService";
 import { getAllUsers } from "../services/Data/getAllUsers";
 import { followUserService } from "../services/Data/followUserService";
+import { unfollowUserService } from "../services/Data/unfollowUserService";
 
 const DataContext = createContext();
 
@@ -48,11 +49,6 @@ export const DataContextProvider = ({ children }) => {
         console.error(error);
       }
     };
-
-
-
-
-
 
   // Function to get all the posts
   const getPosts = async () => {
@@ -210,12 +206,24 @@ export const DataContextProvider = ({ children }) => {
       try{
         const {data,status}= await followUserService(userData.token,userId)
         if(status===200)
-        setUserData(data.user)
+        setUserData(prev=>({...prev,user:data.user}));
       }
       catch(error){
         console.error(error)
       }
     }
+      //function to unfollow an user
+
+      const unfollowUser= async(userId)=>{
+        try{
+          const {data,status}= await unfollowUserService(userData.token,userId)
+          if(status===200)
+          setUserData(prev=>({...prev,user:data.user}));
+        }
+        catch(error){
+          console.error(error)
+        }
+      }
 
   return (
     <DataContext.Provider
@@ -235,7 +243,8 @@ export const DataContextProvider = ({ children }) => {
         editing,
         setEditing,
         editPost,
-        followUser
+        followUser,
+        unfollowUser
       }}
     >
       {children}

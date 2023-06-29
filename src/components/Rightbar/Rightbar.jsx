@@ -16,8 +16,8 @@ export const Rightbar = () => {
           </Typography>
         <Grid item xs={12} md={6}>
           
-          {users?.map((userData) => (
-            <UserCard userData={userData} />
+          {users?.map((profileData) => (
+            <UserCard profileData={profileData} />
           ))}
         </Grid>
       </Box>

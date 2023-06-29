@@ -79,7 +79,7 @@ export const AddPostModal = ({postData}) => {
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }} />
             <Typography fontWeight={500} variant="span">
-              {userData.user.firstName}{" "} {userData.user.lastName}
+              {userData?.user.firstName}{" "} {userData?.user.lastName}
             </Typography>
           </UserBox>
           <TextField
