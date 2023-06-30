@@ -33,10 +33,20 @@ const UserBox = styled(Box)({
   gap: "10px",
 });
 export const Home = () => {
-  const {allPosts}=useDataContext();
+  const {allPosts, makePost}=useDataContext();
   const {userData}=useAuthContext();
+// state for post values
+const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
+const updateContent = (text) => {
+  setPostDetails((prev) => ({ ...prev, content: text }));
+};
 
+const submitPost = () => {
+  makePost(postDetails);
+  setPostDetails({ content: "", mediaURL: "" });
+  
+};
   
 // post that are by the logged user or the person been followed
   const selectedPosts=allPosts?.filter(({username})=>username===userData?.user.username || userData?.user.following.find((data)=>data?.username===username));
@@ -99,6 +109,8 @@ export const Home = () => {
             multiline
             rows={3}
             variant="standard"
+            value={postDetails?.content}
+            onChange={(e) => updateContent(e.target.value)}
           
             
           />
@@ -107,7 +119,7 @@ export const Home = () => {
               <ImageIcon sx={{ color: "gray" }} />
               <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
-           <Button variant="contained">
+           <Button variant="contained" onClick={submitPost}>
               Post
             </Button>
             
