@@ -31,6 +31,8 @@ export const PostCard = ({data}) => {
 
   
   const { userData } = useAuthContext();
+  const {users}=useDataContext();
+ 
   const {
     likePost,
     dislikePost,
@@ -42,6 +44,9 @@ export const PostCard = ({data}) => {
     setEditing
   } = useDataContext();
   const { _id, content, likes, username, mediaURL,createdAt } = data;
+
+  const postOwner=users?.find((userData)=>userData.username=== username)
+
 
   const isPostLiked = likes?.likedBy.find(
     ({ _id }) => _id === userData?.user?._id
@@ -79,9 +84,7 @@ export const PostCard = ({data}) => {
     <Card sx={{ maxWidth: 360, margin: 5, boxShadow: 2 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            {username}
-          </Avatar>
+          <Avatar src={postOwner?.profileAvatar} />
         }
         action={
           <IconButton aria-label="settings" onClick={handleClick}>

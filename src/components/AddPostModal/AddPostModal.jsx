@@ -77,7 +77,7 @@ export const AddPostModal = ({postData}) => {
            {editing ? "Edit the Post": "Create a Post"}
           </Typography>
           <UserBox>
-            <Avatar sx={{ width: 30, height: 30 }} />
+            <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
             <Typography fontWeight={500} variant="span">
               {userData?.user.firstName}{" "} {userData?.user.lastName}
             </Typography>

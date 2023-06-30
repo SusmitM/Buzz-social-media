@@ -19,12 +19,12 @@ export const Layout = ({children}) => {
          <Navbar setMode={setMode} mode={mode} />
         <Stack direction="row" spacing={2} justifyContent="space-between">
         <Sidebar/>
-        <Divider orientation="vertical" flexItem />
+        <Divider  sx={{ display: { xs: "none", sm: "block" }}} orientation="vertical" flexItem />
         <Box  flex={4} p={{ xs: 0, md: 2 }}  minHeight="100vh" sx={{ width: '100%',display: "flex",
     justifyContent: "center"}}>
         {children}
         </Box>
-        <Divider orientation="vertical" flexItem />
+        <Divider sx={{ display: { xs: "none", sm: "block" }}} orientation="vertical" flexItem  />
         <Rightbar/>
         </Stack>
     </Box>

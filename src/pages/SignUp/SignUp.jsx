@@ -42,6 +42,8 @@ export const SignUp = () => {
     const data = new FormData(event.currentTarget);
     if(data.get("password")===data.get("confirmPassword")){
      const signUpData={
+      profileAvatar:
+      "http://bit.ly/42Zm7tM",
       email: data.get("email"),
       password: data.get("password"),
       username: data.get("username"),

@@ -94,7 +94,7 @@ export const Navbar = ({ mode, setMode }) => {
 
  const navigate=useNavigate();
 
- const {logout}=useAuthContext();
+ const {logout,userData}=useAuthContext();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = anchorEl;
@@ -145,7 +145,7 @@ export const Navbar = ({ mode, setMode }) => {
               >
                 <Avatar
                   sx={{ width: "40px", height: "40px" }}
-                  src="https://res.cloudinary.com/dtrjdcrme/image/upload/v1651473734/socialmedia/avatars/adarsh-balika_dct6gm.webp"
+                  src={userData?.user.profileAvatar}
                 />
               </IconButton>
             </Tooltip>
@@ -192,7 +192,7 @@ export const Navbar = ({ mode, setMode }) => {
             
 
           }}>
-            <Avatar src="https://res.cloudinary.com/dtrjdcrme/image/upload/v1651473734/socialmedia/avatars/adarsh-balika_dct6gm.webp" />{" "}
+            <Avatar src={userData?.user.profileAvatar} />{" "}
             Profile
           </MenuItem>
 

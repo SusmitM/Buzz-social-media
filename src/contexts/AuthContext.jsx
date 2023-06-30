@@ -22,9 +22,10 @@ export const AuthContextProvider = ({children }) => {
 
   const signUpHandler=async(signUpData)=>{
     try{
-      const {status} = await signUpService(signUpData);
+      const {status,data} = await signUpService(signUpData);
       if(status===201){
         navigate("/signin")
+        console.log(data)
       }
     }
     catch(error){
@@ -60,8 +61,6 @@ export const AuthContextProvider = ({children }) => {
     }
 
   }
-
-
 
 
   //logout function

@@ -1,13 +1,37 @@
-import "./Home.module.css";
 
-import { Box,Tabs } from "@mui/material";
-import Tab from "@mui/material/Tab";
+
+import { Box,Tabs,Divider, Tab,  Button,
+  Typography,
+  Modal,
+  styled,
+  Avatar,
+  TextField,
+  Stack,
+  Paper } from "@mui/material";
+  import ImageIcon from "@mui/icons-material/Image";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+
 
 import { PostCard } from "../../components/PostCard/PostCard";
 import { useState } from "react";
 import { useDataContext } from "../../contexts/DataContext";
 import { useAuthContext } from "../../contexts/AuthContext";
 
+const StyledModal = styled(Paper)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius:"15px",
+  marginTop:"1.25rem",
+  boxShadow:3
+
+  
+});
+const UserBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+});
 export const Home = () => {
   const {allPosts}=useDataContext();
   const {userData}=useAuthContext();
@@ -52,6 +76,52 @@ export const Home = () => {
     </Box>
    
       </Box>
+      <Divider variant="fullWidth"/>
+      <StyledModal elevation={2}>
+        <Box
+          width={450}
+          height={165}
+          bgcolor={"background.default"}
+          color={"text.default"}
+          p={2}
+         
+        >
+          <UserBox>
+            <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
+            <Typography fontWeight={500} variant="span">
+              {userData?.user.firstName}{" "} {userData?.user.lastName}
+            </Typography>
+          </UserBox>
+          <TextField
+            sx={{ width: "100%" }}
+            id="standard-multiline-static"
+            placeholder="What's on your Mind?!"
+            multiline
+            rows={3}
+            variant="standard"
+          
+            
+          />
+          <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
+            <Box>
+              <ImageIcon sx={{ color: "gray" }} />
+              <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
+            </Box>
+           <Button variant="contained">
+              Post
+            </Button>
+            
+          </Stack>
+        </Box>
+      </StyledModal>
+      <Divider variant="fullWidth"/>
+
+
+
+
+
+
+
       <Box>
         {sortedPosts?.map((data) => (
           <PostCard key={data.id} data={data} />

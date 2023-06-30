@@ -12,9 +12,16 @@ export const users = [
     lastName: "Balika",
     username: "adarshbalika",
     password: "adarshBalika123",
-    createdAt: formatDate(),
+    email: "adarshbalika@gmail.com",
+    bio: "An Adarsh Balika",
+    website: "https://adarshbalika.netlify.app/",
+    profileAvatar:
+    "https://res.cloudinary.com/dtrjdcrme/image/upload/v1651473734/socialmedia/avatars/adarsh-balika_dct6gm.webp",
+    createdAt: "2022-06-12T10:35:21+05:30",
     updatedAt: formatDate(),
+    bookmarks: [],
   },
+  
   {
     _id: "s2d3Bie-8",
     firstName: "John",

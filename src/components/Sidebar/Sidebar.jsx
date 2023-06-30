@@ -23,7 +23,7 @@ export const Sidebar = () => {
   const navigate=useNavigate();
   const {setOpen}=useDataContext();
   return (
-    <Box flex={1} p={1} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center" }}>
+    <Box flex={1} p={1} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center",minWidth:"170px" }}>
       <Box position="fixed">
         <List>
           <ListItem disablePadding>
