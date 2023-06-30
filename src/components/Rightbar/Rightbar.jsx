@@ -7,7 +7,6 @@ export const Rightbar = () => {
   return (
     <Box
       flex={2}
-      p={2}
       sx={{ display: { xs: "none", sm: "flex" }, justifyContent: "center" }}
     >
       <Box position="fixed" width={300}>
