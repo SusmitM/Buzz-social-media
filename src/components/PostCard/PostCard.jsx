@@ -41,7 +41,7 @@ export const PostCard = ({data}) => {
     setOpen,
     setEditing
   } = useDataContext();
-  const { _id, content, likes, username, mediaURL } = data;
+  const { _id, content, likes, username, mediaURL,createdAt } = data;
 
   const isPostLiked = likes?.likedBy.find(
     ({ _id }) => _id === userData?.user?._id
@@ -89,7 +89,11 @@ export const PostCard = ({data}) => {
           </IconButton>
         }
         title={username}
-        subheader="September 14, 2016"
+        subheader={` ${new Date(createdAt)
+          .toDateString()
+          .split(" ")
+          .slice(1, 4)
+          .join(" ")}`}
       />
       <Menu
         id="basic-menu"
