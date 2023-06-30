@@ -206,8 +206,11 @@ export const DataContextProvider = ({ children }) => {
     const followUser= async(userId)=>{
       try{
         const {data,status}= await followUserService(userData.token,userId)
-        if(status===200)
-        setUserData(prev=>({...prev,user:data.user}));
+        if(status===200){
+          console.log(data)
+          setUserData(prev=>({...prev,user:data.user}));
+        }
+        
       }
       catch(error){
         console.error(error)
@@ -218,8 +221,10 @@ export const DataContextProvider = ({ children }) => {
       const unfollowUser= async(userId)=>{
         try{
           const {data,status}= await unfollowUserService(userData.token,userId)
-          if(status===200)
-          setUserData(prev=>({...prev,user:data.user}));
+          if(status===200){
+            setUserData(prev=>({...prev,user:data.user}));
+          }
+          
         }
         catch(error){
           console.error(error)
