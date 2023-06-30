@@ -34,6 +34,7 @@ export const DataContextProvider = ({ children }) => {
     getUsers()
   }, []);
 
+
     // Function to get all the users
     const getUsers= async () => {
       try {

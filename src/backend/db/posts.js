@@ -25,7 +25,7 @@ export const posts = [
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. ",
     likes: {
-      likeCount: 0,
+      likeCount: 2,
       likedBy: [],
       dislikedBy: [],
     },
@@ -39,7 +39,7 @@ export const posts = [
     mediaURL:
       "https://res.cloudinary.com/dtrjdcrme/image/upload/v1647014336/ecommerce/chocolatecake4.webp",
     likes: {
-      likeCount: 2,
+      likeCount: 5,
       likedBy: [],
       dislikedBy: [],
     },
@@ -64,7 +64,7 @@ export const posts = [
       "You are never too old to set another goal or to dream a new dream.",
     mediaURL: "",
     likes: {
-      likeCount: 5,
+      likeCount: 8,
       likedBy: [],
       dislikedBy: [],
     },
@@ -78,7 +78,7 @@ export const posts = [
     content: "testPost",
     mediaURL: "",
     likes: {
-      likeCount: 0,
+      likeCount: 10,
       likedBy: [],
       dislikedBy: []
     },
