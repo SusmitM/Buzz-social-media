@@ -19,6 +19,10 @@ export const dataReducer=(dataState,action)=>{
         case "updateBookmarkedPosts":{
             return {...dataState,bookmarkedPost:action.bookmarkedPosts}
         }
+        case "updateUserData":{
+            const newUserData= dataState?.users?.map((userData)=>userData._id===action.userData._id ? action.userData :userData)
+            return {...dataState,users:newUserData}
+        }
        
 
         default: return dataState 

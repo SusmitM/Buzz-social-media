@@ -14,6 +14,7 @@ import { editPostService } from "../services/Data/editPostService";
 import { getAllUsers } from "../services/Data/getAllUsers";
 import { followUserService } from "../services/Data/followUserService";
 import { unfollowUserService } from "../services/Data/unfollowUserService";
+import { getUserData } from "../services/Data/getUserData";
 
 const DataContext = createContext();
 
@@ -208,7 +209,12 @@ export const DataContextProvider = ({ children }) => {
         const {data,status}= await followUserService(userData.token,userId)
         if(status===200){
           console.log(data)
-          setUserData(prev=>({...prev,user:data.user}));
+          setUserData(prev=>({...prev,user:data.user}))
+         
+          dataDispatch({
+            type: "updateUserData",
+            userData: data.user,
+          });
         }
         
       }
@@ -223,8 +229,27 @@ export const DataContextProvider = ({ children }) => {
           const {data,status}= await unfollowUserService(userData.token,userId)
           if(status===200){
             setUserData(prev=>({...prev,user:data.user}));
+            dataDispatch({
+              type: "updateUserData",
+              userData: data.user,
+            });
+           
           }
           
+        }
+        catch(error){
+          console.error(error)
+        }
+      }
+
+      //function to get an single userData
+
+      const getUser= async({userId})=>{
+        try{
+          const {data,status} = await getUserData(userId);
+         if(status===200){
+          return data.user
+         }
         }
         catch(error){
           console.error(error)
@@ -250,7 +275,8 @@ export const DataContextProvider = ({ children }) => {
         setEditing,
         editPost,
         followUser,
-        unfollowUser
+        unfollowUser,
+        getUser
       }}
     >
       {children}

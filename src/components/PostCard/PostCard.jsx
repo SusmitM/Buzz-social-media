@@ -25,11 +25,12 @@ import { useDataContext } from "../../contexts/DataContext";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import {AddPostModal} from "../../components/AddPostModal/AddPostModal"
+import { useNavigate } from "react-router-dom";
 
 
 export const PostCard = ({data}) => {
 
-  
+  const navigate=useNavigate()
   const { userData } = useAuthContext();
   const {users}=useDataContext();
  
@@ -44,6 +45,7 @@ export const PostCard = ({data}) => {
     setEditing
   } = useDataContext();
   const { _id, content, likes, username, mediaURL,createdAt } = data;
+
 
   const postOwner=users?.find((userData)=>userData.username=== username)
 
@@ -79,24 +81,28 @@ export const PostCard = ({data}) => {
     setAnchorEl(null);
   };
 
+  const navigateToProfile=()=>{
+    navigate(`/profile/${postOwner._id}`)
+  }
+
   return (
    <>
     <Card sx={{ maxWidth: 360, margin: 5, boxShadow: 2 }}>
-      <CardHeader
+      <CardHeader sx={{cursor:"pointer"}}
         avatar={
-          <Avatar src={postOwner?.profileAvatar} />
+          <Avatar onClick={()=>navigateToProfile()} src={postOwner?.profileAvatar} />
         }
         action={
           <IconButton aria-label="settings" onClick={handleClick}>
             <MoreVertIcon />
           </IconButton>
         }
-        title={username}
-        subheader={` ${new Date(createdAt)
+        title={<Box onClick={()=>navigateToProfile()}>{username}</Box>}
+        subheader={<Box onClick={()=>navigateToProfile()}>{new Date(createdAt)
           .toDateString()
           .split(" ")
           .slice(1, 4)
-          .join(" ")}`}
+          .join(" ")}</Box>}
       />
       <Menu
         id="basic-menu"
@@ -115,7 +121,7 @@ export const PostCard = ({data}) => {
         component="img"
         height="194"
         image={mediaURL}
-        alt="Paella dish"
+        alt="postImg"
         sx={{ display: mediaURL ? "" : "none" }}
       />
       <CardContent>
