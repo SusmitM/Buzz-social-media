@@ -10,8 +10,8 @@ import { Box,Tabs,Divider, Tab,  Button,
   Paper } from "@mui/material";
   import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-
-
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { PostCard } from "../../components/PostCard/PostCard";
 import { useState } from "react";
 import { useDataContext } from "../../contexts/DataContext";
@@ -79,8 +79,8 @@ const submitPost = () => {
       
       <Box sx={{ width: '100%'}}>
       <Tabs value={value} onChange={handleChange} variant="fullWidth">
-        <Tab label="Latest Posts" />
-        <Tab label="Trending Posts" />
+        <Tab  icon={<AutoAwesomeIcon/>} iconPosition="start" label="Latest Posts" />
+        <Tab  icon={<LocalFireDepartmentIcon/>} iconPosition="start" label="Trending Posts" />
        
       </Tabs>
     </Box>
@@ -127,12 +127,6 @@ const submitPost = () => {
         </Box>
       </StyledModal>
       <Divider variant="fullWidth"/>
-
-
-
-
-
-
 
       <Box>
         {sortedPosts?.map((data) => (

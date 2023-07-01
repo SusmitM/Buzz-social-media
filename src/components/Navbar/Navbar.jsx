@@ -188,7 +188,7 @@ export const Navbar = ({ mode, setMode }) => {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem onClick={()=>{
-            navigate("/profile");
+            navigate(`/profile/${userData?.user._id}`);
             
 
           }}>
