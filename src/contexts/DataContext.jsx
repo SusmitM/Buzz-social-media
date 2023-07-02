@@ -29,12 +29,6 @@ export const DataContextProvider = ({ children }) => {
   // state for input modal
   const [open, setOpen] = useState(false);
 
-  
-
-
-  //state for handel edit post
-  const [editing,setEditing]=useState(false);
-
   console.log(users);
 
 
@@ -281,8 +275,6 @@ export const DataContextProvider = ({ children }) => {
         deletePost,
         open,
         setOpen,
-        editing,
-        setEditing,
         editPost,
         followUser,
         unfollowUser,

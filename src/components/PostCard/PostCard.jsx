@@ -7,12 +7,10 @@ import {
   Typography,
   IconButton,
   Avatar,
-  Checkbox,
   Box,
   Menu,
   MenuItem,
-  Button,
-  Paper,
+  
 } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -24,8 +22,9 @@ import ShareIcon from "@mui/icons-material/Share";
 import { useDataContext } from "../../contexts/DataContext";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { AddPostModal } from "../../components/AddPostModal/AddPostModal";
+
 import { useNavigate } from "react-router-dom";
+import { EditPostModal } from "../EditPostModal/EditPostModal";
 
 export const PostCard = ({ data }) => {
   const navigate = useNavigate();
@@ -39,10 +38,9 @@ export const PostCard = ({ data }) => {
     bookmarkPost,
     removeBookmarkPost,
     deletePost,
-    setOpen,
-    setEditing,
   } = useDataContext();
   const { _id, content, likes, username, mediaURL, createdAt } = data;
+  
 
   const postOwner = users?.find((userData) => userData.username === username);
 
@@ -65,7 +63,6 @@ export const PostCard = ({ data }) => {
     isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
   };
 
-  const [show, setShow] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -120,16 +117,7 @@ export const PostCard = ({ data }) => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem
-            onClick={() => {
-              setOpen((prev) => !prev);
-              handleClose();
-              setShow((prev) => !prev);
-              setEditing(true);
-            }}
-          >
-            Edit
-          </MenuItem>
+          <EditPostModal postOwner={postOwner} data={data}/>
           <MenuItem
             onClick={() => {
               deletePost(_id);
@@ -187,7 +175,6 @@ export const PostCard = ({ data }) => {
           </IconButton>
         </CardActions>
       </Card>
-      {show && <AddPostModal postData={data} />}
     </>
   );
 };

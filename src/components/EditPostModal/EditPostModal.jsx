@@ -8,46 +8,59 @@ import {
   Avatar,
   TextField,
   Stack,
+  MenuItem
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useDataContext } from "../../contexts/DataContext";
-import { useAuthContext } from "../../contexts/AuthContext";
 
 const StyledModal = styled(Modal)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-});
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  });
+  
+  const UserBox = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginTop: "10px",
+    marginBottom: "20px",
+  });
+  
 
-const UserBox = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
-  marginTop: "10px",
-  marginBottom: "20px",
-});
+export const EditPostModal = ({ postOwner, data }) => {
+    const {editPost } = useDataContext();
+    const [editPostData,setEditPostData]=useState(data);
+  // state for edit profile modal
+  const [openEditPost, setOpenEditPost] = useState(false);
 
-export const AddPostModal = ({postData}) => {
-  const {userData}=useAuthContext();
-  const { makePost,open,setOpen } = useDataContext();
-
-
-  const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
-
-  const updateContent = (text) => {
-    setPostDetails((prev) => ({ ...prev, content: text }));
+  const handleClose = () => {
+    setOpenEditPost(false);
+    setEditPostData(data);
   };
-
-  const submitPost = () => {
-    makePost(postDetails);
-    setPostDetails({ content: "", mediaURL: "" });
-    setOpen(false);
+  const openModal = () => {
+    setOpenEditPost(true);
   };
+  const editHandler=()=>{
+    console.log(editPostData)
+    editPost(editPostData,editPostData._id)
+    handleClose();
+    
+  
+  }
+
+
   return (
-    <div>
-      
-      <StyledModal open={open} onClose={() => {setOpen(false);setPostDetails({ content: "", mediaURL: "" })}}>
+    <>
+      <MenuItem
+        onClick={() => {
+          openModal();
+        }}
+      >
+        Edit
+      </MenuItem>
+      <StyledModal open={openEditPost} onClose={handleClose}>
         <Box
           width={400}
           height={210}
@@ -62,12 +75,12 @@ export const AddPostModal = ({postData}) => {
             textAlign="center"
             component="h2"
           >
-            "Create a Post
+            Edit the Post
           </Typography>
           <UserBox>
-            <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
+            <Avatar sx={{ width: 30, height: 30 }} src={postOwner?.profileAvatar} />
             <Typography fontWeight={500} variant="span">
-              {userData?.user.firstName}{" "} {userData?.user.lastName}
+              {postOwner?.firstName}{" "} {postOwner?.lastName}
             </Typography>
           </UserBox>
           <TextField
@@ -77,21 +90,21 @@ export const AddPostModal = ({postData}) => {
             multiline
             rows={3}
             variant="standard"
-            value={postDetails?.content}
-            onChange={(e) => updateContent(e.target.value)}
+            value={editPostData?.content}
+            onChange={(e) => setEditPostData(prev=>({...prev,content:e.target.value}))}
           />
           <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
             <Box>
               <ImageIcon sx={{ color: "gray" }} />
               <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
-            <Button variant="contained" disabled={postDetails.content?.length > 0 ? false : true} onClick={submitPost}>
-              Post
+             <Button variant="contained" disabled={editPostData?.content ? false: true} onClick={editHandler}>
+              Edit
             </Button>
             
           </Stack>
         </Box>
       </StyledModal>
-    </div>
+    </>
   );
 };
