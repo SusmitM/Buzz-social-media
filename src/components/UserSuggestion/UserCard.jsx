@@ -14,6 +14,7 @@ import styled from "@emotion/styled";
 import AddIcon from "@mui/icons-material/Add";
 import { useDataContext } from "../../contexts/DataContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -28,6 +29,8 @@ export const UserCard = ({ profileData }) => {
     followers,
     profileAvatar,
   } = profileData;
+
+  const navigate=useNavigate()
 
 
   const {followUser,unfollowUser}=useDataContext();
@@ -51,7 +54,7 @@ export const UserCard = ({ profileData }) => {
         <ListItem
           sx={{
             display: "flex",
-            maxWidth: "300px",
+            width: "300px",
             flexDirection: { sm: "column", md: "row" },
             boxShadow: 1,
             gap: 1,
@@ -59,16 +62,18 @@ export const UserCard = ({ profileData }) => {
             justifyContent: "space-between",
           }}
         >
-          <ListItemAvatar>
+          
+          <ListItemAvatar  onClick={()=>navigate(`/profile/${_id}`)}>
             <Avatar src={profileAvatar} />
           </ListItemAvatar>
 
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}  onClick={()=>navigate(`/profile/${_id}`)}>
             <Box>
               {firstName} {lastName}{" "}
             </Box>
             <Box>@{username}</Box>
           </Box>
+          
           {isFollowed ?  <Button
             variant="contained"
             sx={{

@@ -23,6 +23,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { SearchBar } from "../SearchBar/SearchBar";
 
 
 
@@ -33,12 +34,7 @@ const StyledToolbar = styled(Toolbar)({
   justifyContent: "space-between",
 });
 
-const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
-  padding: "0 10px",
-  borderRadius: theme.shape.borderRadius,
-  width: "30%",
-}));
+
 const Icons = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: "20px",
@@ -117,9 +113,8 @@ export const Navbar = ({ mode, setMode }) => {
               Buzz
             </Typography>
           </Box>
-          <Search>
-            <InputBase placeholder="search..." />
-          </Search>
+          
+         
           <Icons>
             <Box>
               <FormControlLabel
