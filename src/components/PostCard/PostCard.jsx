@@ -10,7 +10,6 @@ import {
   Box,
   Menu,
   MenuItem,
-  
 } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -38,11 +37,17 @@ export const PostCard = ({ data }) => {
     bookmarkPost,
     removeBookmarkPost,
     deletePost,
+    followUser,
+    unfollowUser,
   } = useDataContext();
   const { _id, content, likes, username, mediaURL, createdAt } = data;
-  
+
+ 
 
   const postOwner = users?.find((userData) => userData.username === username);
+  const isFollowed = userData?.user.following.find((data) => data._id === postOwner?._id)
+  ? true
+  : false;
 
   const isPostLiked = likes?.likedBy.find(
     ({ _id }) => _id === userData?.user?._id
@@ -62,7 +67,6 @@ export const PostCard = ({ data }) => {
   const handelBookmarkPost = () => {
     isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
   };
-
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -95,38 +99,77 @@ export const PostCard = ({ data }) => {
             </IconButton>
           }
           title={
-            <Box sx={{display:"flex",gap:"2rem",alignItems:"baseline"}} onClick={() => navigateToProfile()}>
+            <Box
+              sx={{ display: "flex", gap: "2rem", alignItems: "baseline" }}
+              onClick={() => navigateToProfile()}
+            >
               <Box sx={{ fontWeight: 500, fontSize: "1rem" }}>
                 {postOwner?.firstName} {postOwner?.lastName}
               </Box>
-              <Box>{new Date(createdAt)
-                .toDateString()
-                .split(" ")
-                .slice(1, 4)
-                .join(" ")}</Box>
+              <Box>
+                {new Date(createdAt)
+                  .toDateString()
+                  .split(" ")
+                  .slice(1, 4)
+                  .join(" ")}
+              </Box>
             </Box>
           }
           subheader={<Box onClick={() => navigateToProfile()}>@{username}</Box>}
         />
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <EditPostModal postOwner={postOwner} data={data}/>
-          <MenuItem
-            onClick={() => {
-              deletePost(_id);
-              handleClose();
+        {userData?.user?._id === postOwner?._id ? (
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
             }}
           >
-            Delete
-          </MenuItem>
-        </Menu>
+            <EditPostModal postOwner={postOwner} data={data} />
+            <MenuItem
+              onClick={() => {
+                deletePost(_id);
+                handleClose();
+              }}
+            >
+              Delete
+            </MenuItem>
+          </Menu>
+        ) : (
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            {
+            isFollowed ? (
+              <MenuItem
+                onClick={() => {
+                  unfollowUser(postOwner?._id);
+                  handleClose();
+                }}
+              >
+                Following
+              </MenuItem>
+            )
+             : (
+              <MenuItem
+                onClick={() => {
+                  followUser(postOwner?._id);
+                  handleClose();
+                }}
+              >
+                Follow
+              </MenuItem>
+            )}
+          </Menu>
+        )}
 
         <CardMedia
           component="img"
