@@ -2,8 +2,10 @@ import { Box, Grid, Typography } from "@mui/material";
 import { useDataContext } from "../../contexts/DataContext";
 import { UserCard } from "../UserSuggestion/UserCard";
 import { SearchBar } from "../SearchBar/SearchBar";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export const Rightbar = () => {
+  const {userData}=useAuthContext();
   const { users } = useDataContext();
   return (
     <Box
@@ -19,9 +21,12 @@ export const Rightbar = () => {
           </Typography>
         <Grid item xs={12} md={6}>
           
-          {users?.map((profileData) => (
-            <UserCard profileData={profileData} />
-          ))}
+          {
+          users?.map((profileData) => 
+            userData?.user._id !== profileData?._id ? <UserCard profileData={profileData} /> :" "
+          )
+        }
+
         </Grid>
       </Box>
     </Box>

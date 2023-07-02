@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/Auth/login";
 import { signUpService } from "../services/Auth/signUp";
-
 import { editProfileService } from "../services/Auth/EditProfile";
-import { useDataContext } from "./DataContext";
+
 
 const { createContext, useContext, useState, useEffect } = require("react");
 
