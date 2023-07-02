@@ -26,11 +26,8 @@ export const DataContextProvider = ({ children }) => {
 
   const { allPosts, bookmarkedPost,users } = dataState;
 
-  // state for input modal
-  const [open, setOpen] = useState(false);
 
-  console.log(users);
-
+  
 
   useEffect(() => {
     getPosts();
@@ -273,8 +270,6 @@ export const DataContextProvider = ({ children }) => {
         bookmarkedPost,
         makePost,
         deletePost,
-        open,
-        setOpen,
         editPost,
         followUser,
         unfollowUser,

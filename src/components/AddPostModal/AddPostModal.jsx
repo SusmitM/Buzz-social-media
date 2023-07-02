@@ -30,8 +30,9 @@ const UserBox = styled(Box)({
 
 export const AddPostModal = ({postData}) => {
   const {userData}=useAuthContext();
-  const { makePost,open,setOpen } = useDataContext();
+  const { makePost} = useDataContext();
 
+  const [open,setOpen]=useState(false);
 
   const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
@@ -46,6 +47,9 @@ export const AddPostModal = ({postData}) => {
   };
   return (
     <div>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        Post
+      </Button>
       
       <StyledModal open={open} onClose={() => {setOpen(false);setPostDetails({ content: "", mediaURL: "" })}}>
         <Box
@@ -62,7 +66,7 @@ export const AddPostModal = ({postData}) => {
             textAlign="center"
             component="h2"
           >
-            "Create a Post
+            Create a Post
           </Typography>
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
