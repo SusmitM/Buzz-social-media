@@ -2,12 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/Auth/login";
 import { signUpService } from "../services/Auth/signUp";
 
+import { editProfileService } from "../services/Auth/EditProfile";
+import { useDataContext } from "./DataContext";
+
 const { createContext, useContext, useState, useEffect } = require("react");
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({children }) => {
 
+ 
   const navigate=useNavigate();
 
   //geting the userData from local storage
@@ -25,7 +29,7 @@ export const AuthContextProvider = ({children }) => {
       const {status,data} = await signUpService(signUpData);
       if(status===201){
         navigate("/signin")
-        console.log(data)
+       
       }
     }
     catch(error){
@@ -71,6 +75,21 @@ export const AuthContextProvider = ({children }) => {
 
 
   }
+  //edit userData
+  const editProfile=async(updatedProfileData)=>{
+    try{
+      const {data,status}=await editProfileService(updatedProfileData, userData.token)
+      if(status===201){
+
+      setUserData(prev=>({...prev,user:data?.user}));
+       return data?.user
+
+      }
+    }
+    catch(error){
+      console.error(error)
+    }
+  }
  
   useEffect(()=>{
     if(localStorageData){
@@ -81,7 +100,7 @@ export const AuthContextProvider = ({children }) => {
 
 
   return(
-    <AuthContext.Provider value={{userData,setUserData,loginHandler,signUpHandler,localStorageData,logout}}>
+    <AuthContext.Provider value={{userData,setUserData,loginHandler,editProfile,signUpHandler,localStorageData,logout}}>
         {children}
     </AuthContext.Provider>
   )

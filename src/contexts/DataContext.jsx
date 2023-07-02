@@ -23,12 +23,21 @@ export const DataContextProvider = ({ children }) => {
 
   // Reducer to store the posts data
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
+
   const { allPosts, bookmarkedPost,users } = dataState;
+
   // state for input modal
   const [open, setOpen] = useState(false);
-  //state for handel edit post
 
+  
+
+
+  //state for handel edit post
   const [editing,setEditing]=useState(false);
+
+  console.log(users);
+
+
   useEffect(() => {
     getPosts();
     getBookmarkedPosts();
@@ -208,7 +217,7 @@ export const DataContextProvider = ({ children }) => {
       try{
         const {data,status}= await followUserService(userData.token,userId)
         if(status===200){
-          console.log(data)
+         
           setUserData(prev=>({...prev,user:data.user}))
          
           dataDispatch({
@@ -260,6 +269,7 @@ export const DataContextProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         users,
+        dataDispatch,
         getPosts,
         allPosts,
         likePost,
@@ -276,7 +286,8 @@ export const DataContextProvider = ({ children }) => {
         editPost,
         followUser,
         unfollowUser,
-        getUser
+        getUser,
+      
       }}
     >
       {children}
