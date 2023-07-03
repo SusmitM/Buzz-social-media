@@ -21,6 +21,10 @@ export const AuthContextProvider = ({children }) => {
   //state to store the userDetails
   const [userData,setUserData]=useState(localStorageData);
 
+
+ const [showLoader,setShowLoader]=useState(true);
+
+
   //signUp function
 
   const signUpHandler=async(signUpData)=>{
@@ -106,9 +110,9 @@ export const AuthContextProvider = ({children }) => {
     }
   },[])
 
-
+ 
   return(
-    <AuthContext.Provider value={{userData,setUserData,loginHandler,editProfile,signUpHandler,localStorageData,logout}}>
+    <AuthContext.Provider value={{userData,setUserData,loginHandler,editProfile,signUpHandler,localStorageData,logout,showLoader,setShowLoader}}>
         {children}
     </AuthContext.Provider>
   )

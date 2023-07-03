@@ -39,15 +39,18 @@ export const DataContextProvider = ({ children }) => {
     // Function to get all the users
     const getUsers= async () => {
       try {
+
         const {status,data} = await getAllUsers();
        
         if (status === 200) {
+          
           dataDispatch({
             type: "addUsers",
             users: data.users,
           });
         }
       } catch (error) {
+       
         console.error(error);
       }
     };
@@ -55,8 +58,9 @@ export const DataContextProvider = ({ children }) => {
   // Function to get all the posts
   const getPosts = async () => {
     try {
-      const response = await getAllPosts();
+            const response = await getAllPosts();
       if (response.status === 200) {
+        
         // Returning the posts
         dataDispatch({
           type: "addPosts",
@@ -64,6 +68,7 @@ export const DataContextProvider = ({ children }) => {
         });
       }
     } catch (error) {
+      
       console.error(error);
     }
   };
@@ -107,14 +112,17 @@ export const DataContextProvider = ({ children }) => {
   // Function to get all bookmarked posts
   const getBookmarkedPosts = async () => {
     try {
+      
       const { data, status } = await getBookmarkPostService(userData.token);
       if (status === 200) {
+        
         dataDispatch({
           type: "addBookmarkedPosts",
           bookmarkedPosts: data.bookmarks,
         });
       }
     } catch (error) {
+     
       toast.error(error.response.data.errors[0])
       console.error(error);
     }
@@ -163,11 +171,12 @@ export const DataContextProvider = ({ children }) => {
   // Function to make a post
   const makePost = async (postDetails) => {
     try {
-      const { status, data } = await makePostService(
+            const { status, data } = await makePostService(
         postDetails,
         userData.token
       );
       if (status === 201) {
+        
         toast.success("Post Added Successfully")
         dataDispatch({
           type: "addPosts",
@@ -175,6 +184,7 @@ export const DataContextProvider = ({ children }) => {
         });
       }
     } catch (error) {
+      
       toast.error(error.response.data.errors[0])
       console.log(error);
     }
@@ -198,12 +208,13 @@ export const DataContextProvider = ({ children }) => {
     // Function to edit a post
     const editPost = async (postDetails,postId) => {
       try {
-        const { status, data } = await editPostService(
+                const { status, data } = await editPostService(
           postDetails,
           userData.token,
           postId
         );
         if (status === 201) {
+          
           toast.success("Edited Post Successfully")
           dataDispatch({
             type: "addPosts",
@@ -211,6 +222,7 @@ export const DataContextProvider = ({ children }) => {
           });
         }
       } catch (error) {
+        
         toast.error(error.response.data.errors[0])
         console.log(error);
       }

@@ -33,8 +33,10 @@ const UserBox = styled(Box)({
   gap: "10px",
 });
 export const Home = () => {
+
   const {allPosts, makePost}=useDataContext();
   const {userData}=useAuthContext();
+ 
 // state for post values
 const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
@@ -74,6 +76,7 @@ const submitPost = () => {
 
   return (
    <Box>
+      
      <Box sx={{ width: '100%',display: "flex",
     justifyContent: "center"}}>
       
@@ -127,6 +130,9 @@ const submitPost = () => {
         </Box>
       </StyledModal>
       <Divider variant="fullWidth"/>
+      {sortedPosts?.length === 0 && (
+          <Typography variant="h4">No Posts To Show...</Typography>
+        )}
 
       <Box>
         {sortedPosts?.map((data) => (
