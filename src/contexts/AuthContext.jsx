@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { loginService } from "../services/Auth/login";
 import { signUpService } from "../services/Auth/signUp";
 import { editProfileService } from "../services/Auth/EditProfile";
-
+import { toast } from 'react-toastify';
 
 const { createContext, useContext, useState, useEffect } = require("react");
 
@@ -13,7 +13,7 @@ export const AuthContextProvider = ({children }) => {
  
   const navigate=useNavigate();
 
-  //geting the userData from local storage
+  //getting the userData from local storage
 
   const localStorageData=JSON.parse(localStorage.getItem("data"));
 
@@ -27,11 +27,13 @@ export const AuthContextProvider = ({children }) => {
     try{
       const {status,data} = await signUpService(signUpData);
       if(status===201){
+        toast.success("SignUp Successful")
         navigate("/signin")
        
       }
     }
     catch(error){
+      toast.error(error.response.data.errors[0])
       console.error(error)
     }
   }
@@ -43,6 +45,9 @@ export const AuthContextProvider = ({children }) => {
     try{
       const {data,status}= await loginService(loginData);
       if(status===200){
+
+        toast.success("Login Successful")
+
         const {encodedToken,foundUser}=data;
      
 
@@ -60,6 +65,7 @@ export const AuthContextProvider = ({children }) => {
       }
     }
     catch(error){
+      toast.error(error.response.data.errors[0])
       console.log(error)
     }
 
@@ -69,6 +75,7 @@ export const AuthContextProvider = ({children }) => {
   //logout function
 
   const logout=()=>{
+    toast.success("Successfully Logged-Out")
     localStorage.removeItem("data");
     navigate("/signin")
 
@@ -79,6 +86,7 @@ export const AuthContextProvider = ({children }) => {
     try{
       const {data,status}=await editProfileService(updatedProfileData, userData.token)
       if(status===201){
+        toast.success("Successfully Edited Profile Data")
 
       setUserData(prev=>({...prev,user:data?.user}));
        return data?.user
@@ -86,6 +94,7 @@ export const AuthContextProvider = ({children }) => {
       }
     }
     catch(error){
+      toast.error(error.response.data.errors[0])
       console.error(error)
     }
   }

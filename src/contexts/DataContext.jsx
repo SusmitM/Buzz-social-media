@@ -1,6 +1,6 @@
 import { useContext, useReducer, useEffect,createContext } from "react";
 import { getAllPosts } from "../services/Data/getAllPosts";
-import { useState } from "react";
+import { toast } from 'react-toastify';
 import { useAuthContext } from "./AuthContext";
 import { likePostService } from "../services/Data/likePostService";
 import { dislikePostService } from "../services/Data/dislikePostService";
@@ -73,12 +73,14 @@ export const DataContextProvider = ({ children }) => {
     try {
       const { data, status } = await likePostService(postId, userData.token);
       if (status === 201) {
+        
         dataDispatch({
           type: "updatePosts",
           posts: data.posts,
         });
       }
     } catch (error) {
+      toast.error(error.response.data.errors[0])
       console.error(error);
     }
   };
@@ -97,6 +99,7 @@ export const DataContextProvider = ({ children }) => {
         });
       }
     } catch (error) {
+      toast.error(error.response.data.errors[0])
       console.error(error);
     }
   };
@@ -112,6 +115,7 @@ export const DataContextProvider = ({ children }) => {
         });
       }
     } catch (error) {
+      toast.error(error.response.data.errors[0])
       console.error(error);
     }
   };
@@ -124,12 +128,14 @@ export const DataContextProvider = ({ children }) => {
         userData.token
       );
       if (status === 200) {
+        toast.success("Added to Bookmarks")
         dataDispatch({
           type: "updateBookmarkedPosts",
           bookmarkedPosts: data.bookmarks,
         });
       }
     } catch (error) {
+      toast.error(error.response.data.errors[0])
       console.error(error);
     }
   };
@@ -142,12 +148,14 @@ export const DataContextProvider = ({ children }) => {
         userData.token
       );
       if (status === 200) {
+        toast.success("Removed From Bookmarks")
         dataDispatch({
           type: "updateBookmarkedPosts",
           bookmarkedPosts: data.bookmarks,
         });
       }
     } catch (error) {
+      toast.error(error.response.data.errors[0])
       console.error(error);
     }
   };
@@ -160,12 +168,14 @@ export const DataContextProvider = ({ children }) => {
         userData.token
       );
       if (status === 201) {
+        toast.success("Post Added Successfully")
         dataDispatch({
           type: "addPosts",
           posts: data.posts,
         });
       }
     } catch (error) {
+      toast.error(error.response.data.errors[0])
       console.log(error);
     }
   };
@@ -175,6 +185,7 @@ export const DataContextProvider = ({ children }) => {
     try {
       const { data, status } = await deletePostService(postId, userData.token);
       if(status===201){
+        toast.success("Post Deleted")
         dataDispatch({
           type: "updatePosts",
           posts: data.posts,
@@ -193,12 +204,14 @@ export const DataContextProvider = ({ children }) => {
           postId
         );
         if (status === 201) {
+          toast.success("Edited Post Successfully")
           dataDispatch({
             type: "addPosts",
             posts: data.posts,
           });
         }
       } catch (error) {
+        toast.error(error.response.data.errors[0])
         console.log(error);
       }
     };
@@ -208,6 +221,9 @@ export const DataContextProvider = ({ children }) => {
       try{
         const {data,status}= await followUserService(userData.token,userId)
         if(status===200){
+         //Note add followers also in 3rd peroson data
+          toast.success(`You Followed ${data.followUser.firstName} ${data.followUser.lastName}`)
+
          
           setUserData(prev=>({...prev,user:data.user}))
          
@@ -219,6 +235,7 @@ export const DataContextProvider = ({ children }) => {
         
       }
       catch(error){
+        toast.error(error.response.data.errors[0])
         console.error(error)
       }
     }
@@ -228,6 +245,7 @@ export const DataContextProvider = ({ children }) => {
         try{
           const {data,status}= await unfollowUserService(userData.token,userId)
           if(status===200){
+            toast.success(`You Unfollowed ${data.followUser.firstName} ${data.followUser.lastName}`)
             setUserData(prev=>({...prev,user:data.user}));
             dataDispatch({
               type: "updateUserData",
@@ -238,6 +256,7 @@ export const DataContextProvider = ({ children }) => {
           
         }
         catch(error){
+          toast.error(error.response.data.errors[0])
           console.error(error)
         }
       }
