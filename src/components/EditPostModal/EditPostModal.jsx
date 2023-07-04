@@ -8,7 +8,8 @@ import {
   Avatar,
   TextField,
   Stack,
-  MenuItem
+  MenuItem,
+  useTheme
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
@@ -34,6 +35,7 @@ export const EditPostModal = ({ postOwner, data }) => {
     const [editPostData,setEditPostData]=useState(data);
   // state for edit profile modal
   const [openEditPost, setOpenEditPost] = useState(false);
+  const theme = useTheme();
 
   const handleClose = () => {
     setOpenEditPost(false);
@@ -79,7 +81,7 @@ export const EditPostModal = ({ postOwner, data }) => {
           </Typography>
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }} src={postOwner?.profileAvatar} />
-            <Typography fontWeight={500} variant="span">
+            <Typography color={theme.palette.mode === "dark" ? "white" : "black"} fontWeight={500} variant="span">
               {postOwner?.firstName}{" "} {postOwner?.lastName}
             </Typography>
           </UserBox>

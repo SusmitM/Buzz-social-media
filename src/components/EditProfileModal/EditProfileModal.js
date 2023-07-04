@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Button, Modal, TextField, Typography,useTheme } from "@mui/material";
 import { useDataContext } from "../../contexts/DataContext";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -24,6 +24,8 @@ export const EditProfileModal = () => {
   const [openEditProfile, setOpenEditProfile] = useState(false);
 
   const [updatedProfileData,setUpdatedProfileData]=useState(userData.user)
+
+  const theme = useTheme();
     
       const handleClose = () =>{
         setOpenEditProfile(false);
@@ -49,7 +51,7 @@ export const EditProfileModal = () => {
       >
         <Box sx={style}>
             <Box component="form" sx={{textAlign:"center"}}>
-            <Typography variant="h5" fontWeight={600}>Edit Profile</Typography>
+            <Typography variant="h5" fontWeight={600} color={theme.palette.mode === "dark" ? "white" : "black"} >Edit Profile</Typography>
            <Box  sx={{display:"flex",justifyContent:"space-around"}}>
            <Box sx={{width:"15%"}}>
            <Badge

@@ -16,6 +16,7 @@ import { followUserService } from "../services/Data/followUserService";
 import { unfollowUserService } from "../services/Data/unfollowUserService";
 import { getUserData } from "../services/Data/getUserData";
 
+
 const DataContext = createContext();
 
 export const DataContextProvider = ({ children }) => {
@@ -25,6 +26,7 @@ export const DataContextProvider = ({ children }) => {
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
 
   const { allPosts, bookmarkedPost,users } = dataState;
+
 
 
   

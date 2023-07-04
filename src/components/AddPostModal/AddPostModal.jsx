@@ -8,6 +8,7 @@ import {
   Avatar,
   TextField,
   Stack,
+  useTheme
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
@@ -33,6 +34,8 @@ export const AddPostModal = ({postData}) => {
   const { makePost} = useDataContext();
 
   const [open,setOpen]=useState(false);
+  const theme = useTheme();
+ 
 
   const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
@@ -70,7 +73,7 @@ export const AddPostModal = ({postData}) => {
           </Typography>
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
-            <Typography fontWeight={500} variant="span">
+            <Typography color={theme.palette.mode === "dark" ? "white" : "black"}  fontWeight={500} variant="span">
               {userData?.user.firstName}{" "} {userData?.user.lastName}
             </Typography>
           </UserBox>
