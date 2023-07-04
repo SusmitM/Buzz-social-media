@@ -78,6 +78,7 @@ export const SignUp = () => {
           sx={{
             my: 8,
             mx: 4,
+            padding:"10px 0px"
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -103,8 +104,8 @@ export const SignUp = () => {
               justifyContent="space-evenly"
               textAlign="left"
             >
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <InputLabel htmlFor="firstName">First Name</InputLabel>
+              <Box sx={{ display: "flex", flexDirection: "column",marginTop: "10px" }}>
+              
                 <TextField
                   size="small"
                   halfWidth
@@ -115,8 +116,8 @@ export const SignUp = () => {
                   autoFocus
                 />
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <InputLabel htmlFor="lastName">Last Name</InputLabel>
+              <Box sx={{ display: "flex", flexDirection: "column",marginTop: "10px" }}>
+               
                 <TextField
                   size="small"
                   halfWidth
@@ -128,10 +129,9 @@ export const SignUp = () => {
                 />
               </Box>
             </Grid>
-            <InputLabel sx={{ marginTop: "10px" }} htmlFor="email">
-              Email
-            </InputLabel>
+            
             <TextField
+            sx={{ marginTop: "15px" }}
               size="small"
               halfWidth
               required
@@ -141,10 +141,9 @@ export const SignUp = () => {
               autoFocus
               label="Email"
             />
-            <InputLabel sx={{ marginTop: "10px" }} htmlFor="username">
-              Username
-            </InputLabel>
+           
             <TextField
+            sx={{ marginTop: "15px" }}
               size="small"
               halfWidth
               required

@@ -1,17 +1,22 @@
-
-
-import { Box,Tabs,Divider, Tab,  Button,
+import {
+  Box,
+  Tabs,
+  Divider,
+  Tab,
+  Button,
   Typography,
   Modal,
   styled,
   Avatar,
   TextField,
   Stack,
-  Paper } from "@mui/material";
-  import ImageIcon from "@mui/icons-material/Image";
+  Paper,
+  Fab,
+} from "@mui/material";
+import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { PostCard } from "../../components/PostCard/PostCard";
 import { useState } from "react";
 import { useDataContext } from "../../contexts/DataContext";
@@ -21,11 +26,9 @@ const StyledModal = styled(Paper)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  borderRadius:"15px",
-  marginTop:"1.25rem",
-  boxShadow:3
-
-  
+  borderRadius: "15px",
+  marginTop: "1.25rem",
+  boxShadow: 3,
 });
 const UserBox = styled(Box)({
   display: "flex",
@@ -33,63 +36,72 @@ const UserBox = styled(Box)({
   gap: "10px",
 });
 export const Home = () => {
+  const { allPosts, makePost } = useDataContext();
+  const { userData } = useAuthContext();
 
-  const {allPosts, makePost}=useDataContext();
-  const {userData}=useAuthContext();
- 
-// state for post values
-const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
+  // state for post values
+  const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
-const updateContent = (text) => {
-  setPostDetails((prev) => ({ ...prev, content: text }));
-};
+  const updateContent = (text) => {
+    setPostDetails((prev) => ({ ...prev, content: text }));
+  };
 
-const submitPost = () => {
-  makePost(postDetails);
-  setPostDetails({ content: "", mediaURL: "" });
-  
-};
-  
-// post that are by the logged user or the person been followed
-  const selectedPosts=allPosts?.filter(({username})=>username===userData?.user.username || userData?.user.following.find((data)=>data?.username===username));
+  const submitPost = () => {
+    makePost(postDetails);
+    setPostDetails({ content: "", mediaURL: "" });
+  };
 
-//post sorted acc to time of upload
+  // post that are by the logged user or the person been followed
+  const selectedPosts = allPosts?.filter(
+    ({ username }) =>
+      username === userData?.user.username ||
+      userData?.user.following.find((data) => data?.username === username)
+  );
+
+  //post sorted acc to time of upload
   const latestPosts = [...selectedPosts]?.sort(
     (a, b) =>
       new Date(b.createdAt).getTime() / 1000 -
       new Date(a.createdAt).getTime() / 1000
   );
-//post sorted acc to time of upload
+  //post sorted acc to time of upload
   const trendingPosts = [...selectedPosts]?.sort(
-     (a, b) =>
-       b.likes.likeCount -
-       a.likes.likeCount
-    );
+    (a, b) => b.likes.likeCount - a.likes.likeCount
+  );
 
   const [value, setValue] = useState(0);
   // sorted posts to display
-  const sortedPosts=value===0 ? latestPosts: trendingPosts ;
+  const sortedPosts = value === 0 ? latestPosts : trendingPosts;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleUploadClick = (event) => {
+    var file = event.target.files[0];
+    // const reader = new FileReader();
+    // var url = reader.readAsDataURL(file);
+    console.log(file)
+  };
 
   return (
-   <Box>
-      
-     <Box sx={{ width: '100%',display: "flex",
-    justifyContent: "center"}}>
-      
-      <Box sx={{ width: '100%'}}>
-      <Tabs value={value} onChange={handleChange} variant="fullWidth">
-        <Tab  icon={<AutoAwesomeIcon/>} iconPosition="start" label="Latest Posts" />
-        <Tab  icon={<LocalFireDepartmentIcon/>} iconPosition="start" label="Trending Posts" />
-       
-      </Tabs>
-    </Box>
-   
+    <Box>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <Box sx={{ width: "100%" }}>
+          <Tabs value={value} onChange={handleChange} variant="fullWidth">
+            <Tab
+              icon={<AutoAwesomeIcon />}
+              iconPosition="start"
+              label="Latest Posts"
+            />
+            <Tab
+              icon={<LocalFireDepartmentIcon />}
+              iconPosition="start"
+              label="Trending Posts"
+            />
+          </Tabs>
+        </Box>
       </Box>
-      <Divider variant="fullWidth"/>
+      <Divider variant="fullWidth" />
       <StyledModal elevation={2}>
         <Box
           width={450}
@@ -97,12 +109,14 @@ const submitPost = () => {
           bgcolor={"background.default"}
           color={"text.default"}
           p={2}
-         
         >
           <UserBox>
-            <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              src={userData?.user.profileAvatar}
+            />
             <Typography fontWeight={500} variant="span">
-              {userData?.user.firstName}{" "} {userData?.user.lastName}
+              {userData?.user.firstName} {userData?.user.lastName}
             </Typography>
           </UserBox>
           <TextField
@@ -114,32 +128,48 @@ const submitPost = () => {
             variant="standard"
             value={postDetails?.content}
             onChange={(e) => updateContent(e.target.value)}
-          
-            
           />
-          <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
+          <Stack
+            direction="row"
+            mt={2}
+            gap={3}
+            sx={{ justifyContent: "space-between" }}
+          >
             <Box>
-              <ImageIcon sx={{ color: "gray" }} />
+              <input
+                style={{ display: "none" }}
+                accept="image/*"
+                id="contained-button-file"
+                multiple
+                type="file"
+                onChange={(e) => handleUploadClick(e)}
+              />
+              <label htmlFor="contained-button-file">
+                <ImageIcon sx={{ color: "gray" }} />
+              </label>
+
               <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
-           <Button variant="contained" onClick={submitPost}>
+            <Button
+              disabled={postDetails?.content.length === 0 ? true : false}
+              variant="contained"
+              onClick={submitPost}
+            >
               Post
             </Button>
-            
           </Stack>
         </Box>
       </StyledModal>
-      <Divider variant="fullWidth"/>
+      <Divider variant="fullWidth" />
       {sortedPosts?.length === 0 && (
-          <Typography variant="h4">No Posts To Show...</Typography>
-        )}
+        <Typography variant="h4">No Posts To Show...</Typography>
+      )}
 
       <Box>
         {sortedPosts?.map((data) => (
           <PostCard key={data.id} data={data} />
         ))}
       </Box>
-   </Box>
-    
+    </Box>
   );
 };

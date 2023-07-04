@@ -85,9 +85,7 @@ export const SignIn = () => {
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-             <InputLabel htmlFor="username">
-              Username
-            </InputLabel>
+             
             <TextField
               margin="normal"
               required
