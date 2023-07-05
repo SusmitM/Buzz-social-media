@@ -82,6 +82,7 @@ export const Home = () => {
     // var url = reader.readAsDataURL(file);
     console.log(file)
   };
+  console.log(sortedPosts);
 
   return (
     <Box>

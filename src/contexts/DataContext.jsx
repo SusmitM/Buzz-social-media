@@ -26,6 +26,8 @@ export const DataContextProvider = ({ children }) => {
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
 
   const { allPosts, bookmarkedPost,users } = dataState;
+ 
+ 
 
 
 
@@ -35,9 +37,9 @@ export const DataContextProvider = ({ children }) => {
     getPosts();
     getBookmarkedPosts();
     getUsers()
-  }, []);
+  }, [userData]);
 
-
+ 
     // Function to get all the users
     const getUsers= async () => {
       try {
@@ -46,17 +48,20 @@ export const DataContextProvider = ({ children }) => {
        
         if (status === 200) {
           
+          const isLoggedInUser=data?.users.map(({_id})=>_id===userData?.user._id)
+          
+        
           dataDispatch({
             type: "addUsers",
-            users: data.users,
+            users: isLoggedInUser ? data?.users : [...data?.users.userData?.user],
           });
         }
       } catch (error) {
-       
+         toast.error(error?.response?.data?.errors[0])
         console.error(error);
       }
     };
-
+    
   // Function to get all the posts
   const getPosts = async () => {
     try {
@@ -66,11 +71,11 @@ export const DataContextProvider = ({ children }) => {
         // Returning the posts
         dataDispatch({
           type: "addPosts",
-          posts: response.data.posts,
+          posts: response?.data.posts,
         });
       }
     } catch (error) {
-      
+        toast.error(error?.response?.data?.errors[0])
       console.error(error);
     }
   };
@@ -83,11 +88,11 @@ export const DataContextProvider = ({ children }) => {
         
         dataDispatch({
           type: "updatePosts",
-          posts: data.posts,
+          posts: data?.posts,
         });
       }
     } catch (error) {
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error);
     }
   };
@@ -102,11 +107,11 @@ export const DataContextProvider = ({ children }) => {
       if (status === 201) {
         dataDispatch({
           type: "updatePosts",
-          posts: data.posts,
+          posts: data?.posts,
         });
       }
     } catch (error) {
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error);
     }
   };
@@ -125,7 +130,7 @@ export const DataContextProvider = ({ children }) => {
       }
     } catch (error) {
      
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error);
     }
   };
@@ -145,7 +150,7 @@ export const DataContextProvider = ({ children }) => {
         });
       }
     } catch (error) {
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error);
     }
   };
@@ -161,11 +166,11 @@ export const DataContextProvider = ({ children }) => {
         toast.success("Removed From Bookmarks")
         dataDispatch({
           type: "updateBookmarkedPosts",
-          bookmarkedPosts: data.bookmarks,
+          bookmarkedPosts: data?.bookmarks,
         });
       }
     } catch (error) {
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error);
     }
   };
@@ -175,20 +180,20 @@ export const DataContextProvider = ({ children }) => {
     try {
             const { status, data } = await makePostService(
         postDetails,
-        userData.token
+        userData?.token
       );
       if (status === 201) {
         
         toast.success("Post Added Successfully")
         dataDispatch({
           type: "addPosts",
-          posts: data.posts,
+          posts: data?.posts,
         });
       }
     } catch (error) {
       
-      toast.error(error.response.data.errors[0])
-      console.log(error);
+      toast.error(error?.response?.data?.errors[0])
+     console.error(error);
     }
   };
 
@@ -200,11 +205,12 @@ export const DataContextProvider = ({ children }) => {
         toast.success("Post Deleted")
         dataDispatch({
           type: "updatePosts",
-          posts: data.posts,
+          posts: data?.posts,
         });
       }
     } catch (error) {
       console.error(error);
+      toast.error(error?.response?.data?.errors[0])
     }
   };
     // Function to edit a post
@@ -212,7 +218,7 @@ export const DataContextProvider = ({ children }) => {
       try {
                 const { status, data } = await editPostService(
           postDetails,
-          userData.token,
+          userData?.token,
           postId
         );
         if (status === 201) {
@@ -220,13 +226,13 @@ export const DataContextProvider = ({ children }) => {
           toast.success("Edited Post Successfully")
           dataDispatch({
             type: "addPosts",
-            posts: data.posts,
+            posts: data?.posts,
           });
         }
       } catch (error) {
         
-        toast.error(error.response.data.errors[0])
-        console.log(error);
+        toast.error(error?.response?.data?.errors[0])
+        console.error(error);
       }
     };
     //function to follow an user
@@ -236,20 +242,20 @@ export const DataContextProvider = ({ children }) => {
         const {data,status}= await followUserService(userData.token,userId)
         if(status===200){
          //Note add followers also in 3rd peroson data
-          toast.success(`You Followed ${data.followUser.firstName} ${data.followUser.lastName}`)
+          toast.success(`You Followed ${data?.followUser.firstName} ${data?.followUser.lastName}`)
 
          
-          setUserData(prev=>({...prev,user:data.user}))
+          setUserData(prev=>({...prev,user:data?.user}))
          
           dataDispatch({
             type: "updateUserData",
-            userData: data.user,
+            userData: data?.user,
           });
         }
         
       }
       catch(error){
-        toast.error(error.response.data.errors[0])
+        toast.error(error?.response?.data?.errors[0])
         console.error(error)
       }
     }
@@ -257,9 +263,9 @@ export const DataContextProvider = ({ children }) => {
 
       const unfollowUser= async(userId)=>{
         try{
-          const {data,status}= await unfollowUserService(userData.token,userId)
+          const {data,status}= await unfollowUserService(userData?.token,userId)
           if(status===200){
-            toast.success(`You Unfollowed ${data.followUser.firstName} ${data.followUser.lastName}`)
+            toast.success(`You Unfollowed ${data?.followUser.firstName} ${data?.followUser.lastName}`)
             setUserData(prev=>({...prev,user:data.user}));
             dataDispatch({
               type: "updateUserData",
@@ -270,7 +276,7 @@ export const DataContextProvider = ({ children }) => {
           
         }
         catch(error){
-          toast.error(error.response.data.errors[0])
+          toast.error(error?.response?.data?.errors[0])
           console.error(error)
         }
       }
@@ -281,10 +287,11 @@ export const DataContextProvider = ({ children }) => {
         try{
           const {data,status} = await getUserData(userId);
          if(status===200){
-          return data.user
+          return data?.user
          }
         }
         catch(error){
+          toast.error(error?.response?.data?.errors[0])
           console.error(error)
         }
       }

@@ -20,7 +20,6 @@ root.render(
       <App />
 
       </DataContextProvider>
-   
     </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>

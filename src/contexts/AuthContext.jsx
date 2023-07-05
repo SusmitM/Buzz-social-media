@@ -37,7 +37,7 @@ export const AuthContextProvider = ({children }) => {
       }
     }
     catch(error){
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error)
     }
   }
@@ -53,6 +53,7 @@ export const AuthContextProvider = ({children }) => {
         toast.success("Login Successful")
 
         const {encodedToken,foundUser}=data;
+       
      
 
         //setting the encoded token in local storage
@@ -63,13 +64,16 @@ export const AuthContextProvider = ({children }) => {
         
         setUserData({token:encodedToken,user:foundUser});
 
+        //adding users to local users array
+       
+
         //navigating to home on successful login
         navigate("/")
 
       }
     }
     catch(error){
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.log(error)
     }
 
@@ -98,7 +102,7 @@ export const AuthContextProvider = ({children }) => {
       }
     }
     catch(error){
-      toast.error(error.response.data.errors[0])
+      toast.error(error?.response?.data?.errors[0])
       console.error(error)
     }
   }

@@ -21,6 +21,21 @@ export const users = [
     updatedAt: formatDate(),
     bookmarks: [],
   },
+  {
+    _id: "5d1b8920-c6cc-4d6a-8v9y-039d01dd4cf0",
+    firstName: "Raj",
+    lastName: "Sharma",
+    username: "rajsharma",
+    password: "rajsharma123",
+    email: "rajsharma@gmail.com",
+    bio: "rajsharma",
+    website: "https://rajsharma.app/",
+    profileAvatar:
+    "https://res.cloudinary.com/dtrjdcrme/image/upload/v1651473734/socialmedia/avatars/adarsh-balika_dct6gm.webp",
+    createdAt: "2022-06-12T10:35:21+05:30",
+    updatedAt: formatDate(),
+    bookmarks: [],
+  },
   
   {
     _id: "s2d3Bie-8",
