@@ -11,8 +11,10 @@ import {
   MenuItem,
   useTheme
 } from "@mui/material";
+import EmojiPicker from "emoji-picker-react";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+
 import { useDataContext } from "../../contexts/DataContext";
 
 const StyledModal = styled(Modal)({
@@ -37,6 +39,17 @@ export const EditPostModal = ({ postOwner, data }) => {
   const [openEditPost, setOpenEditPost] = useState(false);
   const theme = useTheme();
 
+  // state to show emoji box
+  const [showEmojiBox,setShowEmojiBox]=useState(false);
+
+   const emojiClickHandler = (emojiObj) => {
+    const emoji = emojiObj.emoji;
+    const updatedContent = editPostData?.content + emoji;
+    setEditPostData(prev=>({...prev,content:updatedContent}))
+
+    setShowEmojiBox(false);
+  };
+
   const handleClose = () => {
     setOpenEditPost(false);
     setEditPostData(data);
@@ -45,7 +58,6 @@ export const EditPostModal = ({ postOwner, data }) => {
     setOpenEditPost(true);
   };
   const editHandler=()=>{
-    console.log(editPostData)
     editPost(editPostData,editPostData._id)
     handleClose();
     
@@ -98,11 +110,22 @@ export const EditPostModal = ({ postOwner, data }) => {
           <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
             <Box>
               <ImageIcon sx={{ color: "gray" }} />
-              <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
+              <EmojiEmotionsIcon onClick={()=>setShowEmojiBox(prev=>!prev)} sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
              <Button variant="contained" disabled={editPostData?.content ? false: true} onClick={editHandler}>
               Edit
             </Button>
+            {
+          showEmojiBox &&
+           <Box sx={{top:"10px",zIndex:1,position:"absolute"}}
+           >
+            <EmojiPicker 
+              width={350}
+              height={400}
+              onEmojiClick={emojiClickHandler} />
+          </Box>
+
+          }
             
           </Stack>
         </Box>

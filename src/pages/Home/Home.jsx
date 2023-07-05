@@ -13,10 +13,12 @@ import {
   Paper,
   Fab,
 } from "@mui/material";
+import EmojiPicker from "emoji-picker-react";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+
 import { PostCard } from "../../components/PostCard/PostCard";
 import { useState } from "react";
 import { useDataContext } from "../../contexts/DataContext";
@@ -39,11 +41,20 @@ export const Home = () => {
   const { allPosts, makePost } = useDataContext();
   const { userData } = useAuthContext();
 
+  // state to show emoji box
+  const [showEmojiBox,setShowEmojiBox]=useState(false);
+
   // state for post values
   const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
   const updateContent = (text) => {
     setPostDetails((prev) => ({ ...prev, content: text }));
+  };
+  const emojiClickHandler = (emojiObj) => {
+    const emoji = emojiObj.emoji;
+    const updatedContent = postDetails?.content + emoji;
+    updateContent(updatedContent);
+    setShowEmojiBox(false);
   };
 
   const submitPost = () => {
@@ -80,9 +91,8 @@ export const Home = () => {
     var file = event.target.files[0];
     // const reader = new FileReader();
     // var url = reader.readAsDataURL(file);
-    console.log(file)
+    console.log(file);
   };
-  console.log(sortedPosts);
 
   return (
     <Box>
@@ -149,7 +159,8 @@ export const Home = () => {
                 <ImageIcon sx={{ color: "gray" }} />
               </label>
 
-              <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
+              <EmojiEmotionsIcon onClick={()=>setShowEmojiBox(prev=>!prev)} sx={{ marginLeft: "10px", color: "gray" }} />
+           
             </Box>
             <Button
               disabled={postDetails?.content.length === 0 ? true : false}
@@ -159,7 +170,19 @@ export const Home = () => {
               Post
             </Button>
           </Stack>
-        </Box>
+          {
+          showEmojiBox &&
+           <Box sx={{zIndex:1,position:"absolute"}}
+           >
+            <EmojiPicker 
+              width={300}
+              height={400}
+              onEmojiClick={emojiClickHandler} />
+          </Box>
+
+          }
+          </Box>
+          
       </StyledModal>
       <Divider variant="fullWidth" />
       {sortedPosts?.length === 0 && (

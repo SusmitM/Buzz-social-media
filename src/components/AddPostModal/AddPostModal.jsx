@@ -10,6 +10,7 @@ import {
   Stack,
   useTheme
 } from "@mui/material";
+import EmojiPicker from "emoji-picker-react";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useDataContext } from "../../contexts/DataContext";
@@ -40,10 +41,21 @@ export const AddPostModal = ({postData}) => {
   const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
 
   const updateContent = (text) => {
+
     setPostDetails((prev) => ({ ...prev, content: text }));
+  };
+  // state to show emoji box
+  const [showEmojiBox,setShowEmojiBox]=useState(false);
+
+   const emojiClickHandler = (emojiObj) => {
+    const emoji = emojiObj.emoji;
+    const updatedContent = postDetails?.content + emoji;
+    updateContent(updatedContent);
+    setShowEmojiBox(false);
   };
 
   const submitPost = () => {
+    setShowEmojiBox(false)
     makePost(postDetails);
     setPostDetails({ content: "", mediaURL: "" });
     setOpen(false);
@@ -54,7 +66,7 @@ export const AddPostModal = ({postData}) => {
         Post
       </Button>
       
-      <StyledModal open={open} onClose={() => {setOpen(false);setPostDetails({ content: "", mediaURL: "" })}}>
+      <StyledModal open={open} onClose={() => {setOpen(false);setShowEmojiBox(false);setPostDetails({ content: "", mediaURL: "" })}}>
         <Box
           width={400}
           height={210}
@@ -90,13 +102,25 @@ export const AddPostModal = ({postData}) => {
           <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
             <Box>
               <ImageIcon sx={{ color: "gray" }} />
-              <EmojiEmotionsIcon sx={{ marginLeft: "10px", color: "gray" }} />
+              <EmojiEmotionsIcon onClick={()=>setShowEmojiBox(prev=>!prev)} sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
             <Button variant="contained" disabled={postDetails.content?.length > 0 ? false : true} onClick={submitPost}>
               Post
             </Button>
+            {
+          showEmojiBox &&
+           <Box sx={{top:"10px",zIndex:1,position:"absolute"}}
+           >
+            <EmojiPicker 
+              width={350}
+              height={400}
+              onEmojiClick={emojiClickHandler} />
+          </Box>
+
+          }
             
           </Stack>
+      
         </Box>
       </StyledModal>
     </div>
