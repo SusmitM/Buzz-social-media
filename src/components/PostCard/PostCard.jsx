@@ -180,7 +180,7 @@ export const PostCard = ({ data }) => {
           </Menu>
         )}
          <CardContent sx={{cursor:"pointer"}} onClick={()=>navigate(`/postDetails/${_id}`)}>
-        <Typography variant="subtitle2" color={theme.palette.mode === "dark" ? "white" : "black"}>
+        <Typography sx={{fontSize: "1.1rem", fontWeight: 500 ,}} color={theme.palette.mode === "dark" ? "white" : "black"}>
               {content}
             </Typography>
         </CardContent>

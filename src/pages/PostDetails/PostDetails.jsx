@@ -3,6 +3,7 @@ import "./PostDetails.module.css"
 import { useDataContext } from "../../contexts/DataContext";
 import { PostCard } from "../../components/PostCard/PostCard";
 import { Box } from "@mui/material";
+import { CommentCard } from "../../components/CommentCard/CommentCard";
 
 export const PostDetails = () => {
   const {allPosts}=useDataContext();
@@ -12,14 +13,29 @@ export const PostDetails = () => {
   console.log(selectedPost)
 
   return (   
-      <Box
+   
+     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
       }}
     >
-       <PostCard data={selectedPost} />
+      <Box><PostCard data={selectedPost} /></Box>
+      <Box>
+      {selectedPost?.comments?.map((data) => (
+          <CommentCard key={data.id} username={selectedPost?.username} data={data} />
+        ))}
+      </Box>
+       
     </Box>
+    
+    
+    
+    
+    
+    
+
+     
     
   )
 }
