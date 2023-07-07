@@ -12,6 +12,7 @@ import {
   MenuItem,
   useTheme
 } from "@mui/material";
+import { toast } from "react-toastify";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -70,6 +71,12 @@ export const PostCard = ({ data }) => {
   //function to manage bookmark post action
   const handelBookmarkPost = () => {
     isPostBookmarked ? removeBookmarkPost(_id) : bookmarkPost(_id);
+  };
+
+  //function to copy post link
+  const copyLinkHandler = () => {
+    navigator.clipboard.writeText(`https://buzz-v1.vercel.app/postDetails/${_id}`);
+    toast.success("Post Link Copied!!!");
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -172,7 +179,7 @@ export const PostCard = ({ data }) => {
             )}
           </Menu>
         )}
-         <CardContent>
+         <CardContent sx={{cursor:"pointer"}} onClick={()=>navigate(`/postDetails/${_id}`)}>
         <Typography variant="subtitle2" color={theme.palette.mode === "dark" ? "white" : "black"}>
               {content}
             </Typography>
@@ -194,8 +201,6 @@ export const PostCard = ({ data }) => {
             <span></span>
           )
 }
-
-       
 
         <CardActions disableSpacing>
           <Box onClick={() => handelPostLike()}>
@@ -226,7 +231,7 @@ export const PostCard = ({ data }) => {
           <IconButton aria-label="chat">
             <ChatBubbleOutlineIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton aria-label="share" onClick={copyLinkHandler}>
             <ShareIcon />
           </IconButton>
         </CardActions>

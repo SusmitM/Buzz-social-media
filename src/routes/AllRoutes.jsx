@@ -13,7 +13,7 @@ export const AllRoutes = () => {
         <Route path="/explore" element={ <PrivateRoute><Layout><Explore/></Layout></PrivateRoute>} />
         <Route path="/liked" element={ <PrivateRoute><Layout><Liked/></Layout></PrivateRoute>} />
         <Route path="/bookmarks" element={ <PrivateRoute><Layout><Bookmark/></Layout></PrivateRoute>} />
-        <Route path="/postDetails" element={ <PrivateRoute><Layout><PostDetails/></Layout></PrivateRoute>} />
+        <Route path="/postDetails/:postId" element={ <PrivateRoute><Layout><PostDetails/></Layout></PrivateRoute>} />
         <Route path="/mockman" element={<MockMan/>} />
 
   </Routes>
