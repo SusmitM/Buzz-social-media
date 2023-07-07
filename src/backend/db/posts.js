@@ -21,6 +21,56 @@ export const posts = [
     updatedAt: formatDate(),
   },
   {
+    _id: "3XHvLF4kC",
+    content: "Felt like Queen",
+    mediaURL:
+      "https://res.cloudinary.com/djxqg0lar/image/upload/v1688761363/Buzz-socialmedia/ehvrojtq9mq7po7mv197.jpg",
+    likes: {
+      likeCount: 7,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: "EO7iOPN9u5",
+        username: "carlsmith",
+        text: "Happy Birthday! Enjoy your Day!!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+    username: "adarshbalika",
+    createdAt: "2023-06-10T10:55:06+05:30",
+    updatedAt: formatDate(),
+  },
+  {
+    _id: "3XHvLF2kC",
+    content: "My E-commerce project",
+    mediaURL:
+      "https://res.cloudinary.com/djxqg0lar/video/upload/v1688761971/Buzz-socialmedia/smy52vq3lm4vv7tqfllh.mp4",
+    likes: {
+      likeCount: 15,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: "EO7iOPN9u5",
+        username: "carlsmith",
+        text: "Happy Birthday! Enjoy your Day!!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+    username: "adarshbalika",
+    createdAt: "2023-06-06T10:55:06+05:30",
+    updatedAt: formatDate(),
+  },
+  {
     _id: "8f87b286-7c73-4f83-8901-5e154eed21a3",
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. ",
