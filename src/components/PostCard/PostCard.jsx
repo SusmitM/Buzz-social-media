@@ -10,6 +10,7 @@ import {
   Box,
   Menu,
   MenuItem,
+  useTheme
 } from "@mui/material";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -25,8 +26,10 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { EditPostModal } from "../EditPostModal/EditPostModal";
 
+
 export const PostCard = ({ data }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const { userData } = useAuthContext();
   const { users } = useDataContext();
 
@@ -41,13 +44,14 @@ export const PostCard = ({ data }) => {
     unfollowUser,
   } = useDataContext();
   const { _id, content, likes, username, mediaURL, createdAt } = data;
-
- 
+  
 
   const postOwner = users?.find((userData) => userData.username === username);
-  const isFollowed = userData?.user.following.find((data) => data._id === postOwner?._id)
-  ? true
-  : false;
+  const isFollowed = userData?.user.following.find(
+    (data) => data._id === postOwner?._id
+  )
+    ? true
+    : false;
 
   const isPostLiked = likes?.likedBy.find(
     ({ _id }) => _id === userData?.user?._id
@@ -84,7 +88,7 @@ export const PostCard = ({ data }) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 360, margin: 5, boxShadow: 2 }}>
+      <Card sx={{ width: { xs: 350, sm: 550 }, margin:"1.5rem 0", boxShadow: 2 }}>
         <CardHeader
           sx={{ cursor: "pointer" }}
           avatar={
@@ -147,8 +151,7 @@ export const PostCard = ({ data }) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            {
-            isFollowed ? (
+            {isFollowed ? (
               <MenuItem
                 onClick={() => {
                   unfollowUser(postOwner?._id);
@@ -157,8 +160,7 @@ export const PostCard = ({ data }) => {
               >
                 Following
               </MenuItem>
-            )
-             : (
+            ) : (
               <MenuItem
                 onClick={() => {
                   followUser(postOwner?._id);
@@ -170,19 +172,30 @@ export const PostCard = ({ data }) => {
             )}
           </Menu>
         )}
-
-        <CardMedia
-          component="img"
-          height="194"
-          image={mediaURL}
-          alt="postImg"
-          sx={{ display: mediaURL ? "" : "none" }}
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {content}
-          </Typography>
+         <CardContent>
+        <Typography variant="subtitle2" color={theme.palette.mode === "dark" ? "white" : "black"}>
+              {content}
+            </Typography>
         </CardContent>
+        
+         {
+          mediaURL && mediaURL.split("/")[4] === "image" ? (
+            <CardMedia sx={{maxHeight:400, objectFit: "contain"}} component="img" image={mediaURL} alt="postImg" />
+          ) : mediaURL && mediaURL.split("/")[4] === "video" ? (
+            <CardMedia
+              component="video"
+              alt="postVideo"
+              image={mediaURL}
+              autoPlay
+              sx={{maxHeight:400, objectFit: "contain"}}
+              
+            />
+          ) : (
+            <span></span>
+          )
+}
+
+       
 
         <CardActions disableSpacing>
           <Box onClick={() => handelPostLike()}>

@@ -32,9 +32,6 @@ export const Layout = ({children}) => {
         <Box  flex={4} p={{ xs: 0, md: 2 }}  minHeight="100vh" sx={{ width: '100%',display: "flex",
     justifyContent: "center"}}>
       {showLoader ?<Loader /> :children}
-      
-        
-      
         </Box>
         <Divider sx={{ display: { xs: "none", sm: "block" }}} orientation="vertical" flexItem  />
         <Rightbar/>
