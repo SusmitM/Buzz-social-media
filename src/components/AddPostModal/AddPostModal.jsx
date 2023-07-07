@@ -8,13 +8,20 @@ import {
   Avatar,
   TextField,
   Stack,
-  useTheme
+  useTheme,
+  IconButton
 } from "@mui/material";
+import { toast } from "react-toastify";
 import EmojiPicker from "emoji-picker-react";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import CloseIcon from "@mui/icons-material/Close";
+
+
 import { useDataContext } from "../../contexts/DataContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { uploadMedia } from "../../services/Data/uploadMedia";
+import { LoadingButton } from "@mui/lab";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -30,7 +37,7 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-export const AddPostModal = ({postData}) => {
+export const AddPostModal = () => {
   const {userData}=useAuthContext();
   const { makePost} = useDataContext();
 
@@ -39,6 +46,11 @@ export const AddPostModal = ({postData}) => {
  
 
   const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
+   // state to hold the input media
+   const [media, setMedia] = useState(null);
+
+   //state for the button
+   const [loading, setLoading] = useState(false);
 
   const updateContent = (text) => {
 
@@ -54,11 +66,40 @@ export const AddPostModal = ({postData}) => {
     setShowEmojiBox(false);
   };
 
-  const submitPost = () => {
-    setShowEmojiBox(false)
-    makePost(postDetails);
-    setPostDetails({ content: "", mediaURL: "" });
-    setOpen(false);
+  const submitPost = async() => {
+
+    setLoading(true);
+    setShowEmojiBox(false);
+    try{
+      if (media) {
+        const data = new FormData();
+        data.append("file", media);
+        data.append("upload_preset", "Buzz-socialmedia");
+        data.append("folder", "Buzz-socialmedia");
+        const { secure_url } = await uploadMedia(data);
+        makePost({ content: postDetails?.content, mediaURL: secure_url });
+       
+      } else {
+        makePost(postDetails);
+      }
+    }
+    catch(error){
+      toast.error({error})
+    }
+    finally {
+      setPostDetails({ content: "", mediaURL: "" });
+      setMedia(null);
+      setLoading(false);
+      setOpen(false);
+
+    }
+  };
+
+  const handleUploadClick = (event) => {
+    var file = event.target.files[0];
+    Math.round(file.size / 5242880) > 1
+      ? toast.error("File size should not be more than 5Mb")
+      : setMedia(file);
   };
   return (
     <div>
@@ -68,8 +109,7 @@ export const AddPostModal = ({postData}) => {
       
       <StyledModal open={open} onClose={() => {setOpen(false);setShowEmojiBox(false);setPostDetails({ content: "", mediaURL: "" })}}>
         <Box
-          width={400}
-          height={210}
+          width={500}
           bgcolor={"background.default"}
           color={"text.default"}
           p={3}
@@ -99,14 +139,67 @@ export const AddPostModal = ({postData}) => {
             value={postDetails?.content}
             onChange={(e) => updateContent(e.target.value)}
           />
+
+          {media && (
+            <Box mt={1}>
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  color: "white",
+                  backgroundColor: "black",
+                  padding: "1px",
+                  zIndex:1
+                }}
+                aria-label="close"
+                onClick={() => setMedia(null)}
+              >
+                <CloseIcon />
+              </IconButton>
+              <Box mt={1}>
+            {
+            media?.type?.split("/")[0] === "image" ? (
+              <img
+                src={URL.createObjectURL(media)}
+                alt="Post-pic"
+                style={{height:"200px",width:"150px"}}
+              />
+            ) :  media?.type?.split("/")[0] === "video" ?  <video alt="Post-video" style={{height:"200px",width:"150px"}}>
+                
+            <source src={URL.createObjectURL(media)} />
+  
+        </video>:<span></span>
+             
+           }
+            </Box>
+            </Box>
+          )}
+
+
           <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
             <Box>
-              <ImageIcon sx={{ color: "gray" }} />
+            <input
+                style={{ display: "none" }}
+                id="addPostModalImg"
+                multiple
+                type="file"
+                onChange={(event) => handleUploadClick(event)}
+              />
+              <label htmlFor="addPostModalImg">
+                <ImageIcon sx={{ color: "gray" }} />
+              </label>
+
               <EmojiEmotionsIcon onClick={()=>setShowEmojiBox(prev=>!prev)} sx={{ marginLeft: "10px", color: "gray" }} />
             </Box>
-            <Button variant="contained" disabled={postDetails.content?.length > 0 ? false : true} onClick={submitPost}>
-              Post
-            </Button>
+            <LoadingButton
+              disabled={postDetails?.content.length === 0 ? true : false}
+              size="small"
+              onClick={submitPost}
+              loading={loading}
+              loadingPosition="center"
+              variant="contained"
+            >
+              <span>Post</span>
+            </LoadingButton>
             {
           showEmojiBox &&
            <Box sx={{top:"10px",zIndex:1,position:"absolute"}}
