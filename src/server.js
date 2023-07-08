@@ -16,6 +16,14 @@ import {
   getAllUserPostsHandler,
 } from "./backend/controllers/PostController";
 import {
+  getPostCommentsHandler,
+  addPostCommentHandler,
+  editPostCommentHandler,
+  deletePostCommentHandler,
+  upvotePostCommentHandler,
+  downvotePostCommentHandler,
+} from "./backend/controllers/CommentController";
+import {
   followUserHandler,
   getAllUsersHandler,
   getUserHandler,
@@ -86,6 +94,27 @@ export function makeServer({ environment = "development" } = {}) {
       this.post(
         "/users/unfollow/:followUserId/",
         unfollowUserHandler.bind(this)
+      );
+      //post comments routes (public)
+      this.get("/comments/:postId", getPostCommentsHandler.bind(this));
+
+      //post comments routes (private)
+      this.post("/comments/add/:postId", addPostCommentHandler.bind(this));
+      this.post(
+        "/comments/edit/:postId/:commentId",
+        editPostCommentHandler.bind(this)
+      );
+      this.post(
+        "/comments/delete/:postId/:commentId",
+        deletePostCommentHandler.bind(this)
+      );
+      this.post(
+        "/comments/upvote/:postId/:commentId",
+        upvotePostCommentHandler.bind(this)
+      );
+      this.post(
+        "/comments/downvote/:postId/:commentId",
+        downvotePostCommentHandler.bind(this)
       );
       //  Cloudinary API route here
       this.passthrough("https://api.cloudinary.com/v1_1/djxqg0lar/auto/upload");

@@ -4,6 +4,7 @@ import { PostCard } from "../../components/PostCard/PostCard";
 
 export const Explore = () => {
   const { allPosts } = useDataContext();
+  console.log(allPosts)
   
   return (
     <Box >

@@ -8,19 +8,6 @@ import { formatDate } from "../utils/authUtils";
 
 export const posts = [
   {
-    _id: "ebe8e2b7-9cd2-492c-89cf-2310587cf171",
-    content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    username: "adarshbalika",
-    createdAt: "2023-04-06T10:55:06+05:30",
-    updatedAt: formatDate(),
-  },
-  {
     _id: "3XHvLF4kC",
     content: "Felt like Queen",
     mediaURL:
@@ -84,7 +71,7 @@ export const posts = [
     updatedAt: formatDate(),
   },
   {
-    _id: "3XHvLP9kC",
+    _id: "8f87b286-7c73-4f83-2709-5e154eed21a3",
     content: "Yayy! Its my Birthday Today. Made this cake for myself!",
     mediaURL:
       "https://res.cloudinary.com/dtrjdcrme/image/upload/v1647014336/ecommerce/chocolatecake4.webp",
@@ -95,7 +82,7 @@ export const posts = [
     },
     comments: [
       {
-        _id: "EO7iOPN9n8",
+        _id: "ZO7iOPN9n8",
         username: "carlsmith",
         text: "Happy Birthday! Enjoy your Day!!",
         votes: {
@@ -136,7 +123,7 @@ export const posts = [
     username: "julieadams",
     createdAt: "2022-01-10T10:55:06+05:30",
     updatedAt: formatDate(),
-    id: "5"
+
   }
   
  
