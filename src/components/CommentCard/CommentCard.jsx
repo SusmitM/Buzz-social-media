@@ -3,13 +3,14 @@ import { useDataContext } from "../../contexts/DataContext";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { AddCommentModal } from "../AddCommentModal";
+
 
 export const CommentCard = ({data,username,postId}) => {
 
     const theme =useTheme();
     const {userData}=useAuthContext();
     const {users, followUser, unfollowUser,deleteComment}=useDataContext();
-    console.log(data)
     const postOwner = users?.find((userData) => userData.username === username);
     const commentOwner = users?.find((userData) => userData.username === data?.username);
     const isFollowed = userData?.user.following.find(
@@ -65,7 +66,8 @@ export const CommentCard = ({data,username,postId}) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            {/* <EditPostModal postOwner={postOwner} data={data} /> */}
+            <AddCommentModal editing="true" commentContent={data} postId={postId}/>
+           
             <MenuItem
               onClick={() => {
                 removeComment()

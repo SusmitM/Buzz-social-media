@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useAuthContext } from "../contexts/AuthContext";
-import { LoadingButton } from "@mui/lab";
 import { useDataContext } from "../contexts/DataContext";
 
 
@@ -32,11 +31,12 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-export const AddCommentModal=({editing,postId})=>{
-  console.log(editing)
-  const {addComment}=useDataContext();
+export const AddCommentModal=({editing,postId,commentContent})=>{
+  
+
+  const {addComment,editComment}=useDataContext();
   const {userData}=useAuthContext();
-  const[commentData,setCommentData]=useState("");
+  const[commentData,setCommentData]=useState(editing ? commentContent?.text:"");
 
 
   const [open,setOpen]=useState(false);
@@ -53,6 +53,11 @@ export const AddCommentModal=({editing,postId})=>{
   const submitComment=()=>{
     addComment(postId,commentData);
     handleClose();
+  }
+  const updateComment=()=>{
+    editComment(postId,commentContent?._id,commentData);
+    handleClose();
+
   }
 
 
@@ -84,7 +89,7 @@ export const AddCommentModal=({editing,postId})=>{
             textAlign="center"
             component="h2"
           >
-            Add a Comment
+           {editing ? "Edit a Comment":"Add a Comment"} 
           </Typography>
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
@@ -107,9 +112,9 @@ export const AddCommentModal=({editing,postId})=>{
               disabled={commentData?.length===0?true : false}
               size="small"
               variant="contained"
-              onClick={submitComment}
+              onClick={()=>editing ?updateComment():submitComment()}
             >
-              <span>Comment</span>
+              <span>{editing ? "Edit" :"Comment"}</span>
             </Button>
           </Box>
           </Box>
