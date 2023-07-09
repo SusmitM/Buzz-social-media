@@ -10,7 +10,7 @@ export const PostDetails = () => {
   const {postId}=useParams();
   
   const selectedPost=allPosts.find(data=>data?._id===postId);
-  console.log(selectedPost)
+  
 
   return (   
    
@@ -23,7 +23,7 @@ export const PostDetails = () => {
       <Box><PostCard data={selectedPost} /></Box>
       <Box>
       {selectedPost?.comments?.map((data) => (
-          <CommentCard key={data.id} username={selectedPost?.username} data={data} />
+          <CommentCard key={data.id} username={selectedPost?.username} postId={selectedPost?._id} data={data} />
         ))}
       </Box>
        

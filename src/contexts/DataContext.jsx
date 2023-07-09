@@ -16,6 +16,7 @@ import { followUserService } from "../services/Data/followUserService";
 import { unfollowUserService } from "../services/Data/unfollowUserService";
 import { getUserData } from "../services/Data/getUserData";
 import { addCommentService } from "../services/Data/addCommentService";
+import { deleteCommentService } from "../services/Data/deleteCommentService";
 
 const DataContext = createContext();
 
@@ -297,6 +298,22 @@ export const DataContextProvider = ({ children }) => {
       console.error(error);
     }
   };
+    // Function to delete comment
+    const deleteComment = async (postId, commentId) => {
+      try {
+        const { data, status } = await deleteCommentService(postId, commentId, userData.token);
+        if (status === 201) {
+          toast.success("Comment Deleted");
+          dataDispatch({
+            type: "updatePosts",
+            posts: data?.posts,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error(error?.response?.data?.errors[0]);
+      }
+    };
 
   return (
     <DataContext.Provider
@@ -317,6 +334,7 @@ export const DataContextProvider = ({ children }) => {
         unfollowUser,
         getUser,
         addComment,
+        deleteComment
       }}
     >
       {children}

@@ -4,12 +4,11 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-export const CommentCard = ({data,username}) => {
+export const CommentCard = ({data,username,postId}) => {
 
     const theme =useTheme();
     const {userData}=useAuthContext();
-    const {users, followUser,
-      unfollowUser}=useDataContext();
+    const {users, followUser, unfollowUser,deleteComment}=useDataContext();
     console.log(data)
     const postOwner = users?.find((userData) => userData.username === username);
     const commentOwner = users?.find((userData) => userData.username === data?.username);
@@ -27,6 +26,11 @@ export const CommentCard = ({data,username}) => {
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    const removeComment=()=>{
+      deleteComment(postId,data?._id)
+
+    }
     
     
   return (
@@ -64,7 +68,7 @@ export const CommentCard = ({data,username}) => {
             {/* <EditPostModal postOwner={postOwner} data={data} /> */}
             <MenuItem
               onClick={() => {
-                // deletePost(_id);
+                removeComment()
                 handleClose();
               }}
             >
