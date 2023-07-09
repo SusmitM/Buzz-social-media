@@ -26,6 +26,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 import { useNavigate } from "react-router-dom";
 import { EditPostModal } from "../EditPostModal/EditPostModal";
+import { AddCommentModal } from "../AddCommentModal";
 
 
 export const PostCard = ({ data }) => {
@@ -44,7 +45,7 @@ export const PostCard = ({ data }) => {
     followUser,
     unfollowUser,
   } = useDataContext();
-  const { _id, content, likes, username, mediaURL, createdAt } = data;
+  const { _id, content, likes, username,comments, mediaURL, createdAt } = data;
   
 
   const postOwner = users?.find((userData) => userData.username === username);
@@ -228,9 +229,9 @@ export const PostCard = ({ data }) => {
               </IconButton>
             )}
           </Box>
-          <IconButton aria-label="chat">
-            <ChatBubbleOutlineIcon />
-          </IconButton>
+          <AddCommentModal postId={_id}/>
+       
+          <Typography>{comments?.length}</Typography>
           <IconButton aria-label="share" onClick={copyLinkHandler}>
             <ShareIcon />
           </IconButton>
