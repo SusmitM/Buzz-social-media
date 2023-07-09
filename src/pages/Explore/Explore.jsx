@@ -1,18 +1,22 @@
 import { Typography, Box } from "@mui/material";
 import { useDataContext } from "../../contexts/DataContext";
 import { PostCard } from "../../components/PostCard/PostCard";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export const Explore = () => {
   const { allPosts } = useDataContext();
-  console.log(allPosts)
+  const {userData}=useAuthContext();
+ 
+
+  const postToDisplay=allPosts?.filter(data=>data?.username !==userData?.user?.username)
   
   return (
     <Box >
-      {allPosts?.length === 0 && (
+      {postToDisplay?.length === 0 && (
           <Typography variant="h4">No Posts To Show...</Typography>
         )}
       <Box>
-        {allPosts?.map((data) => (
+        {postToDisplay?.map((data) => (
           <PostCard key={data.id} data={data} />
         ))}
       </Box>
