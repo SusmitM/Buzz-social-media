@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
+  cursor:"pointer"
 }));
 export const UserCard = ({ profileData }) => {
   const {

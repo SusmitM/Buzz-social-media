@@ -104,7 +104,7 @@ export const Navbar = ({ mode, setMode }) => {
     <>
       <AppBar position="sticky">
         <StyledToolbar>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex",cursor:"pointer" }} onClick={()=>navigate("/")}>
             <ElectricBoltIcon />
             <Typography
               sx={{ display: { xs: "none", sm: "block" } }}
