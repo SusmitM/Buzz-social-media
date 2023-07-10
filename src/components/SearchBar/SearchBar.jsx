@@ -1,18 +1,24 @@
 import { Autocomplete, Box, InputBase, Stack, TextField, ThemeProvider } from "@mui/material";
 import { useDataContext } from "../../contexts/DataContext";
 import { UserCard } from "../UserSuggestion/UserCard";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 
 
 export const SearchBar = () => {
     const { users } = useDataContext();
+    const{userData}=useAuthContext();
+    
+    const usersToShow=users.filter(({_id})=>_id!==userData?.user?._id)
+
+
   
     return (
       <Stack sx={{ width: "330px", margin: "auto" }}>
         <Autocomplete
           id="searchBox"
           getOptionLabel={(user) => user.firstName + " " + user.lastName}
-          options={users}
+          options={usersToShow}
           sx={{ width: "330px" }}
           isOptionEqualToValue={(option, value) => {
             const lowerCaseValue = typeof value === "string" ? value.toLowerCase() : "";

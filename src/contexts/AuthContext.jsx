@@ -49,6 +49,7 @@ export const AuthContextProvider = ({children }) => {
     try{
       const {data,status}= await loginService(loginData);
       if(status===200){
+        console.log(data)
 
         toast.success("Login Successful")
 

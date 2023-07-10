@@ -222,6 +222,7 @@ export const DataContextProvider = ({ children }) => {
   const followUser = async (userId) => {
     try {
       const { data, status } = await followUserService(userData.token, userId);
+      console.log(data.user.following)
       if (status === 200) {
         //Note add followers also in 3rd peroson data
         toast.success(

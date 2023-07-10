@@ -194,7 +194,7 @@ export const PostCard = ({ data }) => {
               component="video"
               alt="postVideo"
               image={mediaURL}
-              autoPlay
+              controls
               sx={{maxHeight:400, objectFit: "contain"}}
               
             />
