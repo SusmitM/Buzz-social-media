@@ -16,7 +16,7 @@ export const users = [{
     username: "adarshbalika",
     password: "adarshBalika123",
     email: "adarshbalika@gmail.com",
-    bio: "gsgsdg",
+    bio: "A Adarsh Balika",
     website: "https://adarshbalika.netlify.app/",
     profileAvatar: "https://res.cloudinary.com/dtrjdcrme/image/upload/v1651473734/socialmedia/avatars/adarsh-balika_dct6gm.webp",
     createdAt: "2022-06-12T10:35:21+05:30",
