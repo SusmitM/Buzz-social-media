@@ -55,10 +55,10 @@ export const SignIn = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://source.unsplash.com/random?wallpapers)",
+          backgroundImage: "url(https://res.cloudinary.com/djxqg0lar/image/upload/v1689797917/Buzz-socialmedia/stj0asfvv2n1ga9faipg.svg)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) => t.palette.grey[50],
-          backgroundSize: "cover",
+          backgroundSize: "contain",
           backgroundPosition: "center",
         }}
       />
