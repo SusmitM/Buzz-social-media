@@ -55,8 +55,8 @@ export const UserCard = ({ profileData }) => {
         <ListItem
           sx={{
             display: "flex",
-            width: "300px",
-            flexDirection: { sm: "column", md: "row" },
+            maxWidth: "300px",
+            flexDirection: { md: "column", lg: "row" },
             boxShadow: 1,
             gap: 1,
             marginBottom: "10px",
