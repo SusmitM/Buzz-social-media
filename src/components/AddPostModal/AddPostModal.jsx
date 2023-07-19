@@ -9,14 +9,16 @@ import {
   TextField,
   Stack,
   useTheme,
-  IconButton
+  IconButton,
+  BottomNavigationAction
 } from "@mui/material";
+
 import { toast } from "react-toastify";
 import EmojiPicker from "emoji-picker-react";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CloseIcon from "@mui/icons-material/Close";
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { useDataContext } from "../../contexts/DataContext";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -37,7 +39,7 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-export const AddPostModal = () => {
+export const AddPostModal = (mobileView) => {
   const {userData}=useAuthContext();
   const { makePost} = useDataContext();
 
@@ -103,9 +105,10 @@ export const AddPostModal = () => {
   };
   return (
     <div>
-      <Button variant="contained" onClick={() => setOpen(true)}>
+      {mobileView ?<BottomNavigationAction onClick={() => setOpen(true)}label="AddPost" value="AddPost" icon={<AddCircleIcon   />} /> :  <Button variant="contained" onClick={() => setOpen(true)}>
         Post
-      </Button>
+      </Button>}
+     
       
       <StyledModal open={open} onClose={() => {setOpen(false);setShowEmojiBox(false);setPostDetails({ content: "", mediaURL: "" })}}>
         <Box
