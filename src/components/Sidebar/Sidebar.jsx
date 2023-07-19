@@ -6,6 +6,7 @@ import {
   ListItemText,
   ListItem,
   Button,
+  Typography
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -13,6 +14,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AddPostModal } from "../AddPostModal/AddPostModal";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 
@@ -20,41 +22,42 @@ import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () => {
   const navigate=useNavigate();
+  const [selectedPage,setSelectedPage]=useState("Home");
   
   return (
     <Box flex={1} p={1} sx={{ display: { xs: "none", sm: "block" },justifyContent:"center",minWidth:"170px" }}>
       <Box position="fixed">
         <List>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=>navigate("/")}>
+            <ListItemButton onClick={()=>{navigate("/");setSelectedPage("Home")}}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="Home" />
+              <ListItemText primary={<Typography style={{ fontWeight:selectedPage==="Home"?600:'' }}>Home</Typography>} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=>navigate("/explore")}>
+            <ListItemButton  onClick={()=>{navigate("/explore");setSelectedPage("Explore")}}>
               <ListItemIcon>
                 <ExploreIcon />
               </ListItemIcon>
-              <ListItemText primary="Explore" />
+              <ListItemText primary={<Typography style={{ fontWeight:selectedPage==="Explore"?600:'' }}>Explore</Typography>}/>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=>navigate("/bookmarks")}>
+            <ListItemButton  onClick={()=>{navigate("/bookmarks");setSelectedPage("Bookmarks")}}>
               <ListItemIcon>
                 <BookmarkIcon />
               </ListItemIcon>
-              <ListItemText primary="Bookmarks" />
+              <ListItemText primary={<Typography style={{ fontWeight:selectedPage==="Bookmarks"?600:'' }}>Bookmarks</Typography>} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton onClick={()=>navigate("/liked")}>
+            <ListItemButton  onClick={()=>{navigate("/liked");setSelectedPage("Liked Post")}}>
               <ListItemIcon>
                 <FavoriteIcon />
               </ListItemIcon>
-              <ListItemText primary="Liked Posts" />
+              <ListItemText primary={<Typography style={{ fontWeight:selectedPage==="Liked Post"?600:'' }}>Liked Post</Typography>} />
             </ListItemButton>
           </ListItem>
         </List>
