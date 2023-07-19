@@ -1,4 +1,4 @@
-import{ useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -10,7 +10,7 @@ import {
   Stack,
   useTheme,
   IconButton,
-  BottomNavigationAction
+  BottomNavigationAction,
 } from "@mui/material";
 
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ import EmojiPicker from "emoji-picker-react";
 import ImageIcon from "@mui/icons-material/Image";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CloseIcon from "@mui/icons-material/Close";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { useDataContext } from "../../contexts/DataContext";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -39,40 +39,37 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-export const AddPostModal = (mobileView) => {
-  const {userData}=useAuthContext();
-  const { makePost} = useDataContext();
+export const AddPostModal = ({mobileView}) => {
+  const { userData } = useAuthContext();
+  const { makePost } = useDataContext();
 
-  const [open,setOpen]=useState(false);
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
- 
 
   const [postDetails, setPostDetails] = useState({ content: "", mediaURL: "" });
-   // state to hold the input media
-   const [media, setMedia] = useState(null);
+  // state to hold the input media
+  const [media, setMedia] = useState(null);
 
-   //state for the button
-   const [loading, setLoading] = useState(false);
+  //state for the button
+  const [loading, setLoading] = useState(false);
 
   const updateContent = (text) => {
-
     setPostDetails((prev) => ({ ...prev, content: text }));
   };
   // state to show emoji box
-  const [showEmojiBox,setShowEmojiBox]=useState(false);
+  const [showEmojiBox, setShowEmojiBox] = useState(false);
 
-   const emojiClickHandler = (emojiObj) => {
+  const emojiClickHandler = (emojiObj) => {
     const emoji = emojiObj.emoji;
     const updatedContent = postDetails?.content + emoji;
     updateContent(updatedContent);
     setShowEmojiBox(false);
   };
 
-  const submitPost = async() => {
-
+  const submitPost = async () => {
     setLoading(true);
     setShowEmojiBox(false);
-    try{
+    try {
       if (media) {
         const data = new FormData();
         data.append("file", media);
@@ -80,20 +77,16 @@ export const AddPostModal = (mobileView) => {
         data.append("folder", "Buzz-socialmedia");
         const { secure_url } = await uploadMedia(data);
         makePost({ content: postDetails?.content, mediaURL: secure_url });
-       
       } else {
         makePost(postDetails);
       }
-    }
-    catch(error){
-      toast.error({error})
-    }
-    finally {
+    } catch (error) {
+      toast.error({ error });
+    } finally {
       setPostDetails({ content: "", mediaURL: "" });
       setMedia(null);
       setLoading(false);
       setOpen(false);
-
     }
   };
 
@@ -105,12 +98,28 @@ export const AddPostModal = (mobileView) => {
   };
   return (
     <div>
-      {mobileView ?<BottomNavigationAction onClick={() => setOpen(true)}label="AddPost" value="AddPost" icon={<AddCircleIcon   />} /> :  <Button variant="contained" onClick={() => setOpen(true)}>
-        Post
-      </Button>}
-     
-      
-      <StyledModal open={open} onClose={() => {setOpen(false);setShowEmojiBox(false);setPostDetails({ content: "", mediaURL: "" })}}>
+      {
+      mobileView ? (
+        <BottomNavigationAction
+          onClick={() => setOpen(true)}
+          label="AddPost"
+          value="AddPost"
+          icon={<AddCircleIcon />}
+        />
+      ) : (
+        <Button variant="contained" onClick={() => setOpen(true)}>
+          Post
+        </Button>
+      )}
+
+      <StyledModal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setShowEmojiBox(false);
+          setPostDetails({ content: "", mediaURL: "" });
+        }}
+      >
         <Box
           width={500}
           bgcolor={"background.default"}
@@ -127,9 +136,16 @@ export const AddPostModal = (mobileView) => {
             Create a Post
           </Typography>
           <UserBox>
-            <Avatar sx={{ width: 30, height: 30 }} src={userData?.user.profileAvatar} />
-            <Typography color={theme.palette.mode === "dark" ? "white" : "black"}  fontWeight={500} variant="span">
-              {userData?.user.firstName}{" "} {userData?.user.lastName}
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              src={userData?.user.profileAvatar}
+            />
+            <Typography
+              color={theme.palette.mode === "dark" ? "white" : "black"}
+              fontWeight={500}
+              variant="span"
+            >
+              {userData?.user.firstName} {userData?.user.lastName}
             </Typography>
           </UserBox>
           <TextField
@@ -151,7 +167,7 @@ export const AddPostModal = (mobileView) => {
                   color: "white",
                   backgroundColor: "black",
                   padding: "1px",
-                  zIndex:1
+                  zIndex: 1,
                 }}
                 aria-label="close"
                 onClick={() => setMedia(null)}
@@ -159,28 +175,34 @@ export const AddPostModal = (mobileView) => {
                 <CloseIcon />
               </IconButton>
               <Box mt={1}>
-            {
-            media?.type?.split("/")[0] === "image" ? (
-              <img
-                src={URL.createObjectURL(media)}
-                alt="Post-pic"
-                style={{height:"200px",width:"150px"}}
-              />
-            ) :  media?.type?.split("/")[0] === "video" ?  <video alt="Post-video" style={{height:"200px",width:"150px"}}>
-                
-            <source src={URL.createObjectURL(media)} />
-  
-        </video>:<span></span>
-             
-           }
-            </Box>
+                {media?.type?.split("/")[0] === "image" ? (
+                  <img
+                    src={URL.createObjectURL(media)}
+                    alt="Post-pic"
+                    style={{ height: "200px", width: "150px" }}
+                  />
+                ) : media?.type?.split("/")[0] === "video" ? (
+                  <video
+                    alt="Post-video"
+                    style={{ height: "200px", width: "150px" }}
+                  >
+                    <source src={URL.createObjectURL(media)} />
+                  </video>
+                ) : (
+                  <span></span>
+                )}
+              </Box>
             </Box>
           )}
 
-
-          <Stack direction="row" mt={2} gap={3} sx={{ justifyContent: "space-between" }}>
+          <Stack
+            direction="row"
+            mt={2}
+            gap={3}
+            sx={{ justifyContent: "space-between" }}
+          >
             <Box>
-            <input
+              <input
                 style={{ display: "none" }}
                 id="addPostModalImg"
                 multiple
@@ -191,7 +213,10 @@ export const AddPostModal = (mobileView) => {
                 <ImageIcon sx={{ color: "gray" }} />
               </label>
 
-              <EmojiEmotionsIcon onClick={()=>setShowEmojiBox(prev=>!prev)} sx={{ marginLeft: "10px", color: "gray" }} />
+              <EmojiEmotionsIcon
+                onClick={() => setShowEmojiBox((prev) => !prev)}
+                sx={{ marginLeft: "10px", color: "gray" }}
+              />
             </Box>
             <LoadingButton
               disabled={postDetails?.content.length === 0 ? true : false}
@@ -203,20 +228,16 @@ export const AddPostModal = (mobileView) => {
             >
               <span>Post</span>
             </LoadingButton>
-            {
-          showEmojiBox &&
-           <Box sx={{top:"10px",zIndex:1,position:"absolute"}}
-           >
-            <EmojiPicker 
-              width={350}
-              height={400}
-              onEmojiClick={emojiClickHandler} />
-          </Box>
-
-          }
-            
+            {showEmojiBox && (
+              <Box sx={{ top: "10px", zIndex: 1, position: "absolute" }}>
+                <EmojiPicker
+                  width={350}
+                  height={400}
+                  onEmojiClick={emojiClickHandler}
+                />
+              </Box>
+            )}
           </Stack>
-      
         </Box>
       </StyledModal>
     </div>

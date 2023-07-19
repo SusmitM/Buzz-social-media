@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { Logout } from "@mui/icons-material";
-import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
-
+import thunderIcon from "../../assets/thunderIcon.png";
 import {
   AppBar,
   Avatar,
@@ -15,7 +14,6 @@ import {
   MenuItem,
   Divider,
   ListItemIcon,
-  FormGroup,
   FormControlLabel,
   Switch,
 } from "@mui/material";
@@ -23,7 +21,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { SearchBar } from "../SearchBar/SearchBar";
+
 
 
 
@@ -105,10 +103,11 @@ export const Navbar = ({ mode, setMode }) => {
       <AppBar position="sticky">
         <StyledToolbar>
           <Box sx={{ display: "flex",cursor:"pointer" }} onClick={()=>navigate("/")}>
-            <ElectricBoltIcon />
+            
+            <img height="35px" width="35px" src={thunderIcon} alt="HomeLogo" />
             <Typography
-              sx={{ display: { xs: "none", sm: "block" } }}
-              variant="h6"
+              sx={{ display: { xs: "none", sm: "block",fontSize:"1.5rem",fontWeight:550,fontfamily:"cursive"} }}
+             
             >
               Buzz
             </Typography>

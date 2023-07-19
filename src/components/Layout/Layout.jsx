@@ -37,7 +37,10 @@ export const Layout = ({children}) => {
         <Divider sx={{ display: { xs: "none", sm: "block" }}} orientation="vertical" flexItem  />
         <Rightbar/>
         </Stack>
-        <BottomNav/>
+        <Box sx={{ display: { sm: "block", md: "none" }}}>
+        <BottomNav />
+        </Box>
+       
 
     </Box>
     </ThemeProvider>
