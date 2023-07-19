@@ -12,7 +12,7 @@ export const Rightbar = () => {
       flex={2}
       sx={{ display: { xs: "none", sm: "block" }, justifyContent: "center",minWidth:"350px" }}
     >
-      <Box position="fixed"sx={{ mt:3 }}>
+      <Box sx={{ mt:3 }}>
       <SearchBar/>
      
       <Box>
