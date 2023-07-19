@@ -26,7 +26,7 @@ export const Layout = ({children}) => {
     <Box backgroundColor={"background.default"} color={"text.primary"} >
          <Navbar setMode={setMode} mode={mode} />
          
-        <Stack direction="row" spacing={2} justifyContent="space-between" sx={{mb:"66px"}}>
+        <Stack direction="row" spacing={2} justifyContent="space-between" sx={{pb:"66px"}}>
         <Sidebar/>
         <Divider  sx={{ display: { xs: "none", sm: "block" }}} orientation="vertical" flexItem />
        
