@@ -18,18 +18,22 @@ const style = {
   };
 
 export const EditProfileModal = () => {
+  const { users}=useDataContext();
     const {userData,editProfile}=useAuthContext();
+    //logged in user
+    const loggedUser=users?.find(({_id})=>_id===userData?.user?._id)
+    
     const {dataDispatch}=useDataContext();
    // state for edit profile modal
   const [openEditProfile, setOpenEditProfile] = useState(false);
 
-  const [updatedProfileData,setUpdatedProfileData]=useState(userData.user)
+  const [updatedProfileData,setUpdatedProfileData]=useState(loggedUser)
 
   const theme = useTheme();
     
-      const handleClose = () =>{
+      const handleClose = (value) =>{
         setOpenEditProfile(false);
-        setUpdatedProfileData(userData.user)
+        setUpdatedProfileData(value)
 
       } 
       const openModal=()=>{ setOpenEditProfile(true)};
@@ -39,7 +43,7 @@ export const EditProfileModal = () => {
          type: "updateUserData",
           userData: result,
         });
-        handleClose()
+        handleClose(result)
     }
   return (
    <>
@@ -47,7 +51,7 @@ export const EditProfileModal = () => {
     <Button variant="outlined" onClick={()=>openModal()}>Edit</Button>
     <Modal
         open={openEditProfile}
-        onClose={handleClose}
+        onClose={()=>handleClose(loggedUser)}
       >
         <Box sx={style}>
             <Box component="form" sx={{textAlign:"center"}}>
