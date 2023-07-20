@@ -3,8 +3,7 @@
 [Buzz](https://buzz-v1.vercel.app/) is a dynamic and vibrant social media website that empowers users to connect, share, and explore content in a seamless and user-friendly environment. Packed with a plethora of exciting features and powered by cutting-edge technologies, Buzz offers a one-stop solution for all your social networking needs. 
 
 ## Demo video
-
-[Buzz-demo-video](https://www.loom.com/share/24ec6492a8184e3aa074deb0251af9ec?sid=dd69f329-5ec0-4d07-af0c-05eb8426ff11)
+https://github.com/SusmitM/social-media/assets/75859651/a6805f39-be74-4efe-9231-f910600290c3
 
 ## How to install and run locally?
 
