@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useDataContext } from "../../contexts/DataContext";
 import { PostCard } from "../../components/PostCard/PostCard";
 
-export const Bookmark = () => {
+function Bookmark() {
   const { allPosts, bookmarkedPost } = useDataContext();
 
 
@@ -27,3 +27,5 @@ export const Bookmark = () => {
     </>
   );
 };
+
+export default Bookmark;

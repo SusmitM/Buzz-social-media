@@ -7,7 +7,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useAuthContext } from "../../contexts/AuthContext";
 import AddIcon from "@mui/icons-material/Add";
 import { EditProfileModal } from "../../components/EditProfileModal/EditProfileModal";
-export const Profile = () => {
+function Profile() {
   const {users,allPosts,followUser,unfollowUser}=useDataContext()
   const { userData} = useAuthContext();
   const {userId}=useParams();
@@ -79,3 +79,5 @@ export const Profile = () => {
    </Box>
   )
 }
+
+export default Profile;

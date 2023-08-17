@@ -21,7 +21,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-export const SignUp = () => {
+function SignUp(){
   const { signUpHandler } = useAuthContext();
 
   //states for show and unshow password
@@ -225,3 +225,5 @@ export const SignUp = () => {
     </Grid>
   );
 };
+
+export default SignUp;

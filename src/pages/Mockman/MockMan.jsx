@@ -1,7 +1,9 @@
 import Mockman from "mockman-js";
 
-export const MockMan = () => {
+function MockMan(){
   return (
     <div> <Mockman /></div>
   )
 }
+
+export default MockMan

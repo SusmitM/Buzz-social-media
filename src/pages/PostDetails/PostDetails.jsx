@@ -5,7 +5,7 @@ import { PostCard } from "../../components/PostCard/PostCard";
 import { Box } from "@mui/material";
 import { CommentCard } from "../../components/CommentCard/CommentCard";
 
-export const PostDetails = () => {
+ function PostDetails() {
   const {allPosts}=useDataContext();
   const {postId}=useParams();
   
@@ -28,14 +28,7 @@ export const PostDetails = () => {
       </Box>
        
     </Box>
-    
-    
-    
-    
-    
-    
-
-     
-    
   )
 }
+
+export default PostDetails;

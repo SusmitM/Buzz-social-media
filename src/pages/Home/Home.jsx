@@ -47,7 +47,7 @@ const UserBox = styled(Box)({
   alignItems: "center",
   gap: "10px",
 });
-export const Home = () => {
+function Home() {
   const { allPosts, makePost } = useDataContext();
   const { userData } = useAuthContext();
 
@@ -279,3 +279,5 @@ export const Home = () => {
     </Box>
   );
 };
+
+export default Home;

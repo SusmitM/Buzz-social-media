@@ -22,7 +22,7 @@ import "./SignIn.module.css";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-export const SignIn = () => {
+function SignIn() {
   const { loginHandler } = useAuthContext();
 
   const navigate = useNavigate();
@@ -160,3 +160,5 @@ export const SignIn = () => {
     </Grid>
   );
 };
+
+export default SignIn;

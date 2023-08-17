@@ -3,7 +3,7 @@ import { useDataContext } from "../../contexts/DataContext";
 import { PostCard } from "../../components/PostCard/PostCard";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-export const Explore = () => {
+function Explore() {
   const { allPosts } = useDataContext();
   const {userData}=useAuthContext();
  
@@ -23,3 +23,5 @@ export const Explore = () => {
     </Box>
   );
 };
+
+export default Explore;

@@ -18,7 +18,6 @@ root.render(
     <AuthContextProvider>
       <DataContextProvider>
       <App />
-
       </DataContextProvider>
     </AuthContextProvider>
     </BrowserRouter>

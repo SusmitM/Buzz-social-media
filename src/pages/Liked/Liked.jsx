@@ -3,7 +3,7 @@ import "./Liked.module.css";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useDataContext } from "../../contexts/DataContext";
 import { PostCard } from "../../components/PostCard/PostCard";
-export const Liked = () => {
+function Liked(){
   const { userData } = useAuthContext();
   const { allPosts } = useDataContext();
   const likedPost = allPosts?.filter(({ likes }) =>
@@ -25,3 +25,5 @@ export const Liked = () => {
     </>
   );
 };
+
+export default Liked;
