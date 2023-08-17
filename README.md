@@ -3,9 +3,8 @@
 [Buzz](https://buzz-v1.vercel.app/) is a dynamic and vibrant social media website that empowers users to connect, share, and explore content in a seamless and user-friendly environment. Packed with a plethora of exciting features and powered by cutting-edge technologies, Buzz offers a one-stop solution for all your social networking needs. 
 
 ## Demo video
-
-[Buzz-demo-video](https://www.loom.com/share/24ec6492a8184e3aa074deb0251af9ec?sid=dd69f329-5ec0-4d07-af0c-05eb8426ff11)
-
+https://github.com/SusmitM/social-media/assets/75859651/a6805f39-be74-4efe-9231-f910600290c3
+  
 ## How to install and run locally?
 
 ```
@@ -78,3 +77,19 @@ $ npm start
 
 ##
 **Join Buzz Social Media today and be a part of an enthusiastic community of creators, influencers, and friends. Connect with the world and express yourself like never before!**
+
+## Images
+- Sign In Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/48c03c3d-74de-458e-9012-f1e49160d3e1)
+- Sign Up Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/d0d1397b-c1a6-47c7-a6c8-95b801838899)
+- Home Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/89524974-cb2d-457a-9bb0-39066081b480)
+- Explore Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/c983b437-71bb-40a3-9ffc-6a0b1525f8ce)
+- Bookmarked Post Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/42c21460-351f-4e3c-b566-96bff69da027)
+- Liked Post Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/f7f72ae0-0c20-4822-a228-ba65365e0e7f)
+- Profile Page
+  ![image](https://github.com/SusmitM/Buzz-social-media/assets/75859651/92b84110-dbcb-4c58-97ed-987b76825a64)
